@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">카드게임</string>
+    <string name="restart">재시작</string>
+    <string name="restart_alert_msg">다시 시작하겠습니까?</string>
+    <string name="yes">네</string>
+    <string name="no">아니오</string>
+    <string name="same_card">같은 버튼</string>
+    <string name="flips_fmt">뒤집은 카드: %d</string>
+    <string name="restartBtn">재시작</string>
+</resources>
