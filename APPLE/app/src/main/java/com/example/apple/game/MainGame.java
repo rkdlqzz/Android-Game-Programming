@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
+import com.example.apple.R;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
 
@@ -29,6 +30,9 @@ public class MainGame {
 
     public void init() {
         gameObjects.clear();
+
+        Background bg = new Background(R.mipmap.background);
+        gameObjects.add(bg);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
