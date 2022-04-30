@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import com.example.apple.R;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
+import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
 
 import java.util.ArrayList;
@@ -28,16 +29,24 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, player, COUNT
+        bg, player, controller, COUNT
     }
     private Apple apple;
+    private Joystick joystick;
 
     public void init() {
         initLayers(Layer.COUNT.ordinal());
 
+        //joystick
+        float jx = Metrics.width / 4;
+        float jy = Metrics.height - Metrics.height / 7;
+        joystick = new Joystick(jx, jy);
+        add(Layer.controller, joystick);
+
+        // apple
         float fx = Metrics.width / 2;
         float fy = Metrics.height - Metrics.size(R.dimen.apple_y_offset);
-        apple = new Apple(fx, fy);
+        apple = new Apple(fx, fy, joystick);
         add(Layer.player, apple);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
@@ -54,10 +63,16 @@ public class MainGame {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                joystick.SetIsPressed((double) event.getX(), (double) event.getY());
+                return true;
             case MotionEvent.ACTION_MOVE:
-                float x = event.getX();
-                float y = event.getY();
-                apple.setTargetPosition(x, y);
+                if (joystick.GetIsPressed()) {
+                    joystick.SetActuator((double) event.getX(), (double) event.getY());
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                joystick.SetIsPressed(false);
+                joystick.ResetActuator();
                 return true;
         }
         return false;
