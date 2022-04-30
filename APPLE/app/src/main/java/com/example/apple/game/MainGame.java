@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import com.example.apple.R;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
+import com.example.apple.framework.Metrics;
 
 import java.util.ArrayList;
 
@@ -21,18 +22,29 @@ public class MainGame {
         return singleton;
     }
 
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
-    public float frameTime;
-
     public static void clear() {
         singleton = null;
     }
 
-    public void init() {
-        gameObjects.clear();
+    private ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public float frameTime;
+    protected ArrayList<ArrayList<GameObject>> layers;
+    public enum Layer {
+        bg, COUNT
+    }
 
-        Background bg = new Background(R.mipmap.background);
-        gameObjects.add(bg);
+    public void init() {
+//        gameObjects.clear();
+        initLayers(Layer.COUNT.ordinal());
+
+        add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
+    }
+
+    private void initLayers(int count) {
+        layers = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            layers.add(new ArrayList<>());
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -43,23 +55,28 @@ public class MainGame {
     }
 
     public void draw(Canvas canvas) {
-        for (GameObject gobj : gameObjects) {
-            gobj.draw(canvas);
+        for (ArrayList<GameObject> gameObjects : layers) {
+            for (GameObject gobj : gameObjects) {
+                gobj.draw(canvas);
+            }
         }
     }
 
     public void update(int elapsedNanos) {
         frameTime = (float) (elapsedNanos / 1_000_000_000f);
 
-        for (GameObject gobj : gameObjects) {
-            gobj.update();
+        for (ArrayList<GameObject> gameObjects : layers) {
+            for (GameObject gobj : gameObjects) {
+                gobj.update();
+            }
         }
     }
 
-    public void add(GameObject gameObject) {
+    public void add(Layer layer, GameObject gameObject) {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
+                ArrayList<GameObject> gameObjects = layers.get(layer.ordinal());
                 gameObjects.add(gameObject);
             }
         });
@@ -70,12 +87,24 @@ public class MainGame {
         GameView.view.post(new Runnable() {
             @Override
             public void run() {
-                gameObjects.remove(gameObject);
+                for (ArrayList<GameObject> gameObjects : layers) {
+                    boolean removed = gameObjects.remove(gameObject);
+                    if (!removed) continue;
+                    break;
+                }
             }
         });
     }
 
+    public ArrayList<GameObject> objectsAt(Layer layer) {
+        return layers.get(layer.ordinal());
+    }
+
     public int objectCount() {
-        return gameObjects.size();
+        int count = 0;
+        for (ArrayList<GameObject> gameObjects : layers) {
+            count += gameObjects.size();
+        }
+        return count;
     }
 }
