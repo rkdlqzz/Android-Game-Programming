@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="bg_speed">10dp</dimen>
+    <dimen name="apple_radius">30dp</dimen>
+    <dimen name="apple_red_speed">300dp</dimen>
+    <dimen name="apple_y_offset">100dp</dimen>
 </resources>

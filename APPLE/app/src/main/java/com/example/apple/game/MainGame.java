@@ -1,7 +1,6 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import com.example.apple.R;
@@ -26,16 +25,20 @@ public class MainGame {
         singleton = null;
     }
 
-    private ArrayList<GameObject> gameObjects = new ArrayList<>();
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, COUNT
+        bg, player, COUNT
     }
+    private Apple apple;
 
     public void init() {
-//        gameObjects.clear();
         initLayers(Layer.COUNT.ordinal());
+
+        float fx = Metrics.width / 2;
+        float fy = Metrics.height - Metrics.size(R.dimen.apple_y_offset);
+        apple = new Apple(fx, fy);
+        add(Layer.player, apple);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
     }
@@ -49,8 +52,14 @@ public class MainGame {
 
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-//        switch (action) {
-//        }
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                float x = event.getX();
+                float y = event.getY();
+                apple.setTargetPosition(x, y);
+                return true;
+        }
         return false;
     }
 
