@@ -1,9 +1,13 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import com.example.apple.R;
+import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
 import com.example.apple.framework.Joystick;
@@ -14,6 +18,7 @@ import java.util.ArrayList;
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private static MainGame singleton;
+    private Paint collisionPaint;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -50,6 +55,11 @@ public class MainGame {
         add(Layer.player, apple);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
+
+        collisionPaint = new Paint();
+        collisionPaint.setStrokeWidth(5);
+        collisionPaint.setStyle(Paint.Style.STROKE);
+        collisionPaint.setColor(Color.RED);
     }
 
     private void initLayers(int count) {
@@ -82,6 +92,10 @@ public class MainGame {
         for (ArrayList<GameObject> gameObjects : layers) {
             for (GameObject gobj : gameObjects) {
                 gobj.draw(canvas);
+                if (gobj instanceof CircleCollidable) {
+                    RectF circle = ((CircleCollidable) gobj).getBoundingRect();
+                    canvas.drawRoundRect(circle, 100, 100, collisionPaint);
+                }
             }
         }
     }

@@ -1,13 +1,15 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import com.example.apple.R;
+import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
 import com.example.apple.framework.Sprite;
 
-public class Apple extends Sprite {
+public class Apple extends Sprite implements CircleCollidable {
     private static final String TAG = Apple.class.getSimpleName();
 
     private float angle;
@@ -36,5 +38,10 @@ public class Apple extends Sprite {
         dy = (float) joystick.GetActuatorY() * speed * frameTime;
         y += dy;
         angle = (float) joystick.GetAngleRadian();
+    }
+
+    @Override
+    public RectF getBoundingRect() {
+        return dstRect;
     }
 }
