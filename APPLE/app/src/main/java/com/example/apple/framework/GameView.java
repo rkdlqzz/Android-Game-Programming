@@ -28,6 +28,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        Metrics.width = w;
+        Metrics.height = h;
 
         if (!initialized) {
             initView();
