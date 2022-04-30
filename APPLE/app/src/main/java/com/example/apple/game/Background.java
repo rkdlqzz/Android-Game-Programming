@@ -7,22 +7,33 @@ import android.graphics.RectF;
 import com.example.apple.framework.BitmapPool;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
+import com.example.apple.framework.Metrics;
+import com.example.apple.framework.Sprite;
 
-public class Background implements GameObject {
-    private final Bitmap bitmap;
-    private RectF dstRect = new RectF();
-
-    public Background(int bitmapResId){
-        bitmap = BitmapPool.get(bitmapResId);
+public class Background extends Sprite {
+    private final float speed;
+    private final int height;
+    public Background(int bitmapResId, float speed) {
+        super(Metrics.width / 2, Metrics.height / 2,
+                Metrics.width, Metrics.height, bitmapResId);
+        this.height = bitmap.getHeight() * Metrics.width / bitmap.getWidth();
+        setDstRect(Metrics.width, height);
+        this.speed = speed;
     }
 
     @Override
     public void update() {
+        this.y += speed * MainGame.getInstance().frameTime;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        dstRect.set(0, 0, GameView.view.getWidth(), GameView.view.getHeight());
-        canvas.drawBitmap(bitmap, null, dstRect, null);
+        int curr = (int)y % height;
+        if (curr > 0) curr -= height;
+        while (curr < Metrics.height) {
+            dstRect.set(0, curr, Metrics.width, curr + height);
+            canvas.drawBitmap(bitmap, null, dstRect, null);
+            curr += height;
+        }
     }
 }
