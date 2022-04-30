@@ -4,4 +4,6 @@
     <dimen name="apple_radius">30dp</dimen>
     <dimen name="apple_red_speed">300dp</dimen>
     <dimen name="apple_y_offset">100dp</dimen>
+    <dimen name="joystick_bg_radius">55dp</dimen>
+    <dimen name="joystick_button_radius">35dp</dimen>
 </resources>
