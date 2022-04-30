@@ -1,12 +1,7 @@
 package com.example.apple.game;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 
-import com.example.apple.framework.BitmapPool;
-import com.example.apple.framework.GameObject;
-import com.example.apple.framework.GameView;
 import com.example.apple.framework.Metrics;
 import com.example.apple.framework.Sprite;
 
