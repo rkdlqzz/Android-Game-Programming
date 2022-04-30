@@ -44,4 +44,19 @@ public class Apple extends Sprite implements CircleCollidable {
     public RectF getBoundingRect() {
         return dstRect;
     }
+
+    @Override
+    public float getCenterX() {
+        return x;
+    }
+
+    @Override
+    public float getCenterY() {
+        return y;
+    }
+
+    @Override
+    public float getRadius() {
+        return radius;
+    }
 }
