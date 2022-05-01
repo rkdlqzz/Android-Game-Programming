@@ -6,5 +6,6 @@
     <dimen name="apple_y_offset">100dp</dimen>
     <dimen name="joystick_bg_radius">55dp</dimen>
     <dimen name="joystick_button_radius">35dp</dimen>
-    <dimen name="enemy_speed">30dp</dimen>
+    <dimen name="enemy_speed_1">30dp</dimen>
+    <dimen name="enemy_speed_diff_range">10dp</dimen>
 </resources>

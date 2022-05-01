@@ -42,6 +42,8 @@ public class MainGame {
     public void init() {
         initLayers(Layer.COUNT.ordinal());
 
+        add(Layer.manager, new EnemyGenerator());
+
         add(Layer.manager, new CollisionChecker());
 
         //joystick
@@ -55,9 +57,6 @@ public class MainGame {
         float fy = Metrics.height - Metrics.size(R.dimen.apple_y_offset);
         apple = new Apple(fx, fy, joystick);
         add(Layer.player, apple);
-
-        Enemy enemy = new Enemy(fx, Metrics.size(R.dimen.enemy_speed));
-        add(Layer.enemy, enemy);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
 
