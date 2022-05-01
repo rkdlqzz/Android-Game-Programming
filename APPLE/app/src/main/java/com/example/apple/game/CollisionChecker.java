@@ -3,6 +3,7 @@ package com.example.apple.game;
 import android.graphics.Canvas;
 import android.util.Log;
 
+import com.example.apple.app.MainActivity;
 import com.example.apple.framework.CollisionHelper;
 import com.example.apple.framework.GameObject;
 
@@ -29,7 +30,8 @@ public class CollisionChecker implements GameObject {
                 }
                 Apple player = (Apple) o2;
                 if (CollisionHelper.collides(enemy, player)) {
-                    game.remove(enemy);
+                    //game.remove(enemy);
+                    System.exit(0); // player와 enemy 충돌 시 게임오버
                     collided = true;
                     break;
                 }
