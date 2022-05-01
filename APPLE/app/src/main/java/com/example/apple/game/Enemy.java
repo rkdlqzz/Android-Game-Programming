@@ -9,26 +9,38 @@ import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
 
 public class Enemy extends AnimSprite implements CircleCollidable {
-    public static final float FRAMES_PER_SECOND = 10.0f;
     private static final String TAG = Enemy.class.getSimpleName();
-    public static float size = Metrics.width / 5.0f * 0.9f;
-    protected float dy;
+    public static float FRAMES_PER_SECOND = 10.0f;  // 초기 애니메이션 속도 (후에 스테이지 증가 시 증가하도록)
+    public static float size = Metrics.width / 6;   // enemy의 크기
+    protected float dx, dy;
+    public int side;    // enemy가 생성된 사이드 (상, 좌, 우) (stage 1 - 상 / 2 - 상, 좌 / 3 - 상, 좌, 우)
 
-    public Enemy(float x, float speed) {
-        super(x, -size, size, size, R.mipmap.enemy, FRAMES_PER_SECOND, 0);
-        dy = speed;
+    public enum Side {
+        top, left, right
+    }
+
+    public Enemy(float x, float y, float dx, float dy, int side) {
+        super(x, y, size, size, R.mipmap.enemy, FRAMES_PER_SECOND, 0);
+        this.dx = dx;
+        this.dy = dy;
+        this.side = side;
+
+        Log.d(TAG, "Create Enemy x : " + x + "  y : " + y + "  dx : " + dx + "  dy : " + dy);
     }
 
     @Override
     public void update() {
-//        super.update();
-
         float frameTime = MainGame.getInstance().frameTime;
+        x += dx * frameTime;
         y += dy * frameTime;
         setDstRectWithRadius();
-        if (dstRect.top > Metrics.height) {
-            MainGame.getInstance().remove(this);
-        }
+
+        // side에 따라서 remove 조건 다르게 적용
+//        if (dstRect.top > Metrics.height) {
+//            MainGame.getInstance().remove(this);
+        //recycleBin.add(this);
+//        }
+        //Log.d(TAG, "x : " + x + "  y : " + y);
     }
 
     public int getScore() {
