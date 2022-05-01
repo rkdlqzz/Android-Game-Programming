@@ -25,7 +25,7 @@ public class Enemy extends AnimSprite implements CircleCollidable {
         this.dy = dy;
         this.side = side;
 
-        Log.d(TAG, "Create Enemy x : " + x + "  y : " + y + "  dx : " + dx + "  dy : " + dy);
+        //Log.d(TAG, "Create Enemy x : " + x + "  y : " + y + "  dx : " + dx + "  dy : " + dy);
     }
 
     @Override

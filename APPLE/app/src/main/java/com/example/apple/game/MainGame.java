@@ -38,8 +38,11 @@ public class MainGame {
     }
     private Apple apple;
     private Joystick joystick;
+    public static int stage;
 
     public void init() {
+        stage = 1;
+
         initLayers(Layer.COUNT.ordinal());
 
         add(Layer.manager, new EnemyGenerator());
