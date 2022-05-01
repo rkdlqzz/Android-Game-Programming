@@ -37,14 +37,33 @@ public class Enemy extends AnimSprite implements CircleCollidable {
         float frameTime = MainGame.getInstance().frameTime;
         x += dx * frameTime;
         y += dy * frameTime;
+
         setDstRectWithRadius();
 
+        checkOutOfScreen();
+    }
+
+    private void checkOutOfScreen() {
         // side에 따라서 remove 조건 다르게 적용
-//        if (dstRect.top > Metrics.height) {
-//            MainGame.getInstance().remove(this);
-        //recycleBin.add(this);
-//        }
-        //Log.d(TAG, "x : " + x + "  y : " + y);
+        switch (side) {
+            case 0: // Side.top - 상단에서 스폰
+                if (dstRect.top > Metrics.height || dstRect.right < 0 || dstRect.left > Metrics.width) {
+                    MainGame.getInstance().remove(this);
+                }
+                break;
+            case 1: // Side.left - 좌측에서 스폰
+                if (dstRect.left > Metrics.width || dstRect.top > Metrics.height || dstRect.bottom < 0) {
+                    MainGame.getInstance().remove(this);
+                }
+                break;
+            case 2: // Side.right - 우측에서 스폰
+                if (dstRect.right < 0 || dstRect.top > Metrics.height || dstRect.bottom < 0) {
+                    MainGame.getInstance().remove(this);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public int getScore() {

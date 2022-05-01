@@ -29,6 +29,8 @@ public class EnemyGenerator implements GameObject {
     @Override
     public void update() {
         float frameTime = MainGame.getInstance().frameTime;
+        //Log.d(TAG, "NumOfEnemy : " + MainGame.getInstance().objectsAt(MainGame.Layer.enemy).size());
+
         // maxEnemy 이상은 enemy spawn하지 않도록
         if (MainGame.getInstance().objectsAt(MainGame.Layer.enemy).size() >= maxEnemy) return;
 
