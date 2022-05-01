@@ -34,13 +34,15 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, player, controller, COUNT
+        bg, enemy, player, controller, manager, COUNT
     }
     private Apple apple;
     private Joystick joystick;
 
     public void init() {
         initLayers(Layer.COUNT.ordinal());
+
+        add(Layer.manager, new CollisionChecker());
 
         //joystick
         float jx = Metrics.width / 4;
@@ -53,6 +55,9 @@ public class MainGame {
         float fy = Metrics.height - Metrics.size(R.dimen.apple_y_offset);
         apple = new Apple(fx, fy, joystick);
         add(Layer.player, apple);
+
+        Enemy enemy = new Enemy(fx, Metrics.size(R.dimen.enemy_speed));
+        add(Layer.enemy, enemy);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
 
@@ -93,8 +98,8 @@ public class MainGame {
             for (GameObject gobj : gameObjects) {
                 gobj.draw(canvas);
                 if (gobj instanceof CircleCollidable) {
-                    RectF circle = ((CircleCollidable) gobj).getBoundingRect();
-                    canvas.drawRoundRect(circle, 100, 100, collisionPaint);
+                    CircleCollidable cobj = (CircleCollidable) gobj;
+                    canvas.drawCircle(cobj.getCenterX(), cobj.getCenterY(), cobj.getRadius(), collisionPaint);
                 }
             }
         }
