@@ -21,14 +21,6 @@ public class Apple extends Sprite implements CircleCollidable {
         this.joystick = joystick;
     }
 
-    public void draw(Canvas canvas) {
-        setDstRectWithRadius();
-        canvas.save();
-        canvas.rotate((float) (angle * 180 / Math.PI) + 90, x, y);
-        canvas.drawBitmap(bitmap, null, dstRect, null);
-        canvas.restore();
-    }
-
     public void update() {
         float frameTime = MainGame.getInstance().frameTime;
         float speed = Metrics.size(R.dimen.apple_red_speed);
@@ -38,6 +30,14 @@ public class Apple extends Sprite implements CircleCollidable {
         dy = (float) joystick.GetActuatorY() * speed * frameTime;
         y += dy;
         angle = (float) joystick.GetAngleRadian();
+    }
+
+    public void draw(Canvas canvas) {
+        setDstRectWithRadius();
+        canvas.save();
+        canvas.rotate((float) (angle * 180 / Math.PI) + 90, x, y);
+        canvas.drawBitmap(bitmap, null, dstRect, null);
+        canvas.restore();
     }
 
     @Override
