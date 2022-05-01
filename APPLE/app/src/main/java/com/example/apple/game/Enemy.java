@@ -1,5 +1,6 @@
 package com.example.apple.game;
 
+import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -24,6 +25,9 @@ public class Enemy extends AnimSprite implements CircleCollidable {
         this.dx = dx;
         this.dy = dy;
         this.side = side;
+
+        rotate = true;
+        angle = (float) Math.atan2(-dy, -dx);
 
         //Log.d(TAG, "Create Enemy x : " + x + "  y : " + y + "  dx : " + dx + "  dy : " + dy);
     }

@@ -12,6 +12,9 @@ public class AnimSprite extends Sprite {
     private Rect srcRect = new Rect();
     private long createdOn;
 
+    public boolean rotate;
+    public float angle;
+
     public AnimSprite(float x, float y, float w, float h, int bitmapResId, float framesPerSecond, int frameCount) {
         super(x, y, w, h, bitmapResId);
         int imageWidth = bitmap.getWidth();
@@ -39,6 +42,15 @@ public class AnimSprite extends Sprite {
         float time = (now - createdOn) / 1000.0f;
         int index = Math.round(time * framesPerSecond) % frameCount;
         srcRect.set(index * imageWidth, 0, (index + 1) * imageWidth, imageHeight);
-        canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+
+        if (rotate) {
+            canvas.save();
+            canvas.rotate((float) (angle * 180 / Math.PI) + 90, x, y);
+            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+            canvas.restore();
+        }
+        else {
+            canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+        }
     }
 }
