@@ -12,6 +12,8 @@ import com.example.apple.framework.GameObject;
 import com.example.apple.framework.GameView;
 import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
+import com.example.apple.framework.Recyclable;
+import com.example.apple.framework.RecycleBin;
 
 import java.util.ArrayList;
 
@@ -135,6 +137,9 @@ public class MainGame {
                 for (ArrayList<GameObject> gameObjects : layers) {
                     boolean removed = gameObjects.remove(gameObject);
                     if (!removed) continue;
+                    if (gameObject instanceof Recyclable) {
+                        RecycleBin.add((Recyclable) gameObject);
+                    }
                     break;
                 }
             }

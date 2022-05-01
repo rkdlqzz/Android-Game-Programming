@@ -87,7 +87,7 @@ public class EnemyGenerator implements GameObject {
                 break;
         }
 
-        Enemy enemy = new Enemy(x, y, dx, dy, side);
+        Enemy enemy = Enemy.get(x, y, dx, dy, side);
         MainGame.getInstance().add(MainGame.Layer.enemy, enemy);
     }
 
