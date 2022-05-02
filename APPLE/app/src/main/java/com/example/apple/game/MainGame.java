@@ -36,7 +36,7 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, item, enemy, player, controller, manager, COUNT
+        bg, item, enemy, player, controller, cloud, manager, COUNT
     }
     private Apple apple;
     private Joystick joystick;
@@ -64,6 +64,7 @@ public class MainGame {
         add(Layer.player, apple);
 
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
+        add(Layer.cloud, new Background(R.mipmap.clouds, Metrics.size(R.dimen.cloud_speed)));
 
         collisionPaint = new Paint();
         collisionPaint.setStrokeWidth(5);
