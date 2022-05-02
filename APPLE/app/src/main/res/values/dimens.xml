@@ -8,4 +8,5 @@
     <dimen name="joystick_button_radius">35dp</dimen>
     <dimen name="enemy_speed_1">40dp</dimen>
     <dimen name="enemy_speed_diff_range">10dp</dimen>
+    <dimen name="item_fall_speed">50dp</dimen>
 </resources>

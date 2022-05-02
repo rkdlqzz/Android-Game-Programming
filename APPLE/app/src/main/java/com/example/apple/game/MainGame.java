@@ -36,7 +36,7 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, enemy, player, controller, manager, COUNT
+        bg, item, enemy, player, controller, manager, COUNT
     }
     private Apple apple;
     private Joystick joystick;
@@ -48,7 +48,7 @@ public class MainGame {
         initLayers(Layer.COUNT.ordinal());
 
         add(Layer.manager, new EnemyGenerator());
-
+        add(Layer.manager, new ItemGenerator());
         add(Layer.manager, new CollisionChecker());
 
         //joystick
