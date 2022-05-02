@@ -16,6 +16,7 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
     public static float size = Metrics.width / 6;   // item의 크기
     private float dy;
     protected int type;
+    protected float duration;
 
     public static Item get(float x, float dy, int type, int bitmapResId) {
         Item item = (Item) RecycleBin.get(Item.class);
@@ -32,6 +33,7 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
         this.y = -size;
         this.dy = dy;
         this.type = type;
+        setItemDuration();
 
         //Log.d(TAG, "Recycle Item");
     }
@@ -41,8 +43,23 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
 
         this.dy = dy;
         this.type = type;
+        setItemDuration();
 
         //Log.d(TAG, "Create Item");
+    }
+
+    private void setItemDuration() {
+        switch (type) {
+            case 0:
+                duration = Metrics.floatValue(R.dimen.item_speed_up_duration);
+                break;
+            case 1:
+                duration = Metrics.floatValue(R.dimen.item_left_bomb_duration);
+                break;
+            case 2:
+                duration = Metrics.floatValue(R.dimen.item_wood_shield_duration);
+                break;
+        }
     }
 
     @Override
@@ -79,5 +96,12 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
 
     @Override
     public void finish() {
+    }
+
+    public int getType() {
+        return type;
+    }
+    public float getDuration() {
+        return duration;
     }
 }

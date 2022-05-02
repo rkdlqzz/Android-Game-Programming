@@ -3,10 +3,14 @@
     <dimen name="bg_speed">10dp</dimen>
     <dimen name="apple_radius">30dp</dimen>
     <dimen name="apple_red_speed">200dp</dimen>
+    <dimen name="apple_green_speed">300dp</dimen>
     <dimen name="apple_y_offset">100dp</dimen>
     <dimen name="joystick_bg_radius">55dp</dimen>
     <dimen name="joystick_button_radius">35dp</dimen>
     <dimen name="enemy_speed_1">40dp</dimen>
     <dimen name="enemy_speed_diff_range">10dp</dimen>
     <dimen name="item_fall_speed">50dp</dimen>
+    <item name="item_speed_up_duration" type="dimen" format="float">5.0</item>
+    <item name="item_left_bomb_duration" type="dimen" format="float">5.0</item>
+    <item name="item_wood_shield_duration" type="dimen" format="float">5.0</item>
 </resources>
