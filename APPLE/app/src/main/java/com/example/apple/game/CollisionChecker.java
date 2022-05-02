@@ -17,7 +17,9 @@ public class CollisionChecker implements GameObject {
         MainGame game = MainGame.getInstance();
         ArrayList<GameObject> players = game.objectsAt(MainGame.Layer.player);
         ArrayList<GameObject> enemies = game.objectsAt(MainGame.Layer.enemy);
+        ArrayList<GameObject> items = game.objectsAt(MainGame.Layer.item);
 
+        // enemy - player
         for (GameObject o1 : enemies) {
             if (!(o1 instanceof Enemy)) {
                 continue;
@@ -31,7 +33,31 @@ public class CollisionChecker implements GameObject {
                 Apple player = (Apple) o2;
                 if (CollisionHelper.collides(enemy, player)) {
                     //game.remove(enemy);
-                    System.exit(0); // player와 enemy 충돌 시 게임오버
+                    //System.exit(0); // player와 enemy 충돌 시 게임오버
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
+                continue;
+            }
+        }
+
+        // item - player
+        for (GameObject o1 : items) {
+            if (!(o1 instanceof Item)) {
+                continue;
+            }
+            Item item = (Item) o1;
+            boolean collided = false;
+            for (GameObject o2 : players) {
+                if (!(o2 instanceof Apple)) {
+                    continue;
+                }
+                Apple player = (Apple) o2;
+                if (CollisionHelper.collides(item, player)) {
+                    game.remove(item);
+                    player.getItem(item.getType(), item.getDuration());
                     collided = true;
                     break;
                 }
