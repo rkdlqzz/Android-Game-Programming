@@ -1,6 +1,7 @@
 package com.example.apple.framework;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.apple.R;
 
@@ -34,6 +35,8 @@ public class Joystick implements GameObject {
     public void update() {
         inCircle.x = (float) (outCircleCX + actuatorX * outCircleRadius);
         inCircle.y = (float) (outCircleCY + actuatorY * outCircleRadius);
+
+        //Log.d(TAG, "" + actuatorX + "   " + actuatorY);
     }
 
     @Override
