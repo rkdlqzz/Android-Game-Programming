@@ -9,6 +9,8 @@
     <dimen name="joystick_bg_radius">55dp</dimen>
     <dimen name="joystick_button_radius">35dp</dimen>
     <dimen name="enemy_speed_1">40dp</dimen>
+    <dimen name="enemy_speed_2">50dp</dimen>
+    <dimen name="enemy_speed_3">60dp</dimen>
     <dimen name="enemy_speed_diff_range">10dp</dimen>
     <dimen name="item_fall_speed">50dp</dimen>
     <dimen name="score_margin_right">20dp</dimen>

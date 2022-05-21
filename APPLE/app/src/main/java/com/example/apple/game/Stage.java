@@ -23,7 +23,7 @@ public class Stage implements GameObject {
     @Override
     public void update() {
         playTime += MainGame.getInstance().frameTime;
-        stage = 1 + (int) (playTime / stagePeriod);
+        //stage = 1 + (int) (playTime / stagePeriod);
         stage = stage <= maxStage ? stage : maxStage;
 
         //Log.d(TAG, "" + stage);
