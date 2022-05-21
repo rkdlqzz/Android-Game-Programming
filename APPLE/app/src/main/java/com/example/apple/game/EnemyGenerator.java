@@ -11,12 +11,12 @@ import java.util.Random;
 
 public class EnemyGenerator implements GameObject {
     private static final String TAG = EnemyGenerator.class.getSimpleName();
-    private static final int[] MAX_ENEMY = {13, 18, 23}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {1.5f, 1.2f, 0.9f};   // 스폰 간격 (스테이지별)
+    private static final int[] MAX_ENEMY = {13, 15, 18}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {1.3f, 0.9f, 0.5f};   // 스폰 간격 (스테이지별)
     private float elapsedTime;
     private final float speedErrorRange;    // enemy 속도(dx,dy) 오차 범위
     Random random = new Random();
-    private static float[] faceAxisSpeed = {0, 0, 0};    // 정면으로 이동하는 속도 (상->하, 좌->우, 우->좌) (화면 가운데로 이동하는)
+    private static float[] faceAxisSpeed = {0, 0, 0};    // 정면으로 이동하는 속도 (상->하, 우->좌, 좌->우) (화면 가운데로 이동하는)
 
     public EnemyGenerator() {
         this.speedErrorRange = Metrics.size(R.dimen.enemy_speed_diff_range);
@@ -29,7 +29,7 @@ public class EnemyGenerator implements GameObject {
     public void update() {
         MainGame game = MainGame.getInstance();
         float frameTime = game.frameTime;
-        Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
+        //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
 
         // maxEnemy 이상은 enemy spawn하지 않도록
         if (game.objectsAt(MainGame.Layer.enemy).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
@@ -42,26 +42,30 @@ public class EnemyGenerator implements GameObject {
     }
 
     private void spawn() {
-        float x = 0, y = 0, dx = 0, dy = 0;
+        float x, y, dx, dy;
         int side = 0;
         int stage = MainGame.getInstance().stage.get();
 
         switch (stage) {
             case 1:     // stage 1 - 상단에서만 생성
                 side = Enemy.Side.top.ordinal();
-
-                x = getX(side);
-                y = getY(side);
-                dx = getDx(side, stage);
-                dy = getDy(side, stage);
                 break;
-            case 2:
+            case 2:     // stage 2 - 상단, 우측에서 생성
+                side = random.nextInt(Enemy.Side.right.ordinal() + 1);
+                //side = Enemy.Side.right.ordinal();   // 디버깅용
                 break;
-            case 3:
+            case 3:     // stage 3 - 상단, 우측, 좌측에서 생성
+                side = random.nextInt(Enemy.Side.left.ordinal() + 1);
+                //side = Enemy.Side.left.ordinal();   // 디버깅용
                 break;
             default:
                 break;
         }
+
+        x = getX(side);
+        y = getY(side);
+        dx = getDx(side, stage);
+        dy = getDy(side, stage);
 
         Enemy enemy = Enemy.get(x, y, dx, dy, side);
         MainGame.getInstance().add(MainGame.Layer.enemy, enemy);
@@ -75,9 +79,11 @@ public class EnemyGenerator implements GameObject {
                 // width의 0.1~0.9 사이의 x값
                 x = Metrics.width * 0.1f + random.nextInt((int) (Metrics.width * 0.8f));
                 break;
-            case 1:     // left
+            case 1:     // right
+                x = Metrics.width + Enemy.size / 2 + random.nextInt((int) Enemy.size / 2);
                 break;
-            case 2:     // right
+            case 2:     // left
+                x = -Enemy.size / 2 + random.nextInt((int) Enemy.size / 2) * (-1);
                 break;
             default:
                 break;
@@ -90,11 +96,12 @@ public class EnemyGenerator implements GameObject {
 
         switch (side) {
             case 0:     // top
-                y = -Enemy.size + random.nextInt((int) Enemy.size) * (-1);
+                y = -Enemy.size / 2 + random.nextInt((int) Enemy.size / 2) * (-1);
                 break;
-            case 1:     // left
-                break;
-            case 2:     // right
+            case 1:     // right
+            case 2:     // left
+                // height의 0.1~0.9 사이의 y값
+                y = Metrics.height * 0.1f + random.nextInt((int) (Metrics.height * 0.8f));
                 break;
             default:
                 break;
@@ -113,9 +120,18 @@ public class EnemyGenerator implements GameObject {
                 dx = random.nextInt((int) faceAxisSpeed[stage - 1] / 3);
                 dx = error ? dx : -dx;
                 break;
-            case 1:     // left
+            case 1:     // right     (dx는 음수만, 좌측으로만 이동)
+                error = random.nextBoolean();
+                speedError = random.nextInt((int) speedErrorRange);
+                dx = -faceAxisSpeed[stage - 1];
+                dx = error ? dx + speedError : dx - speedError;
+
                 break;
-            case 2:     // right
+            case 2:     // left     (dx는 양수만, 우측으로만 이동)
+                error = random.nextBoolean();
+                speedError = random.nextInt((int) speedErrorRange);
+                dx = faceAxisSpeed[stage - 1];
+                dx = error ? dx + speedError : dx - speedError;
                 break;
             default:
                 break;
@@ -135,9 +151,11 @@ public class EnemyGenerator implements GameObject {
                 dy = faceAxisSpeed[stage - 1];
                 dy = error ? dy + speedError : dy - speedError;
                 break;
-            case 1:     // left
-                break;
-            case 2:     // right
+            case 1:     // right
+            case 2:     // left
+                error = random.nextBoolean();
+                dy = random.nextInt((int) faceAxisSpeed[stage - 1]);
+                dy = error ? dy : -dy;
                 break;
             default:
                 break;
