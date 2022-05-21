@@ -1,6 +1,5 @@
 package com.example.apple.game;
 
-import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.apple.R;
@@ -50,16 +49,32 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
 
     private void setItemDuration() {
         switch (type) {
-            case 0:
+            case 0:     // speed up
                 duration = Metrics.floatValue(R.dimen.item_speed_up_duration);
                 break;
-            case 1:
-                duration = Metrics.floatValue(R.dimen.item_left_bomb_duration);
+            case 1:     // leaf bomb
+                duration = Metrics.floatValue(R.dimen.item_leaf_bomb_duration);
                 break;
-            case 2:
+            case 2:     // wood shield
                 duration = Metrics.floatValue(R.dimen.item_wood_shield_duration);
                 break;
         }
+    }
+
+    public void useItem(Apple player) {
+        switch (type) {
+            case 0:     // speed up
+                player.useItem(type, duration);
+                break;
+            case 1:     // leaf bomb
+                MainGame.getInstance().add(MainGame.Layer.bomb, new LeafBomb(x, y, size, duration));
+                break;
+            case 2:     // wood shield
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
@@ -72,11 +87,6 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
         if (dstRect.top > Metrics.height) {
             game.remove(this);
         }
-    }
-
-    @Override
-    public RectF getBoundingRect() {
-        return dstRect;
     }
 
     @Override

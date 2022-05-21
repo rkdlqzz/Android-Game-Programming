@@ -3,7 +3,6 @@ package com.example.apple.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -37,7 +36,7 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, item, enemy, player, cloud, controller, ui, manager, COUNT
+        bg, item, enemy, bomb, player, cloud, controller, ui, manager, COUNT
     }
     private Apple apple;
     private Joystick joystick;
