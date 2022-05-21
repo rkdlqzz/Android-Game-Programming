@@ -36,10 +36,11 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, item, enemy, player, controller, cloud, manager, COUNT
+        bg, item, enemy, player, cloud, controller, ui, manager, COUNT
     }
     private Apple apple;
     private Joystick joystick;
+    public Score score;
     public static int stage;
 
     public void init() {
@@ -47,6 +48,7 @@ public class MainGame {
 
         initLayers(Layer.COUNT.ordinal());
 
+        // manager
         add(Layer.manager, new EnemyGenerator());
         add(Layer.manager, new ItemGenerator());
         add(Layer.manager, new CollisionChecker());
@@ -63,9 +65,15 @@ public class MainGame {
         apple = new Apple(fx, fy, joystick);
         add(Layer.player, apple);
 
+        // background, cloud
         add(Layer.bg, new Background(R.mipmap.background, Metrics.size(R.dimen.bg_speed)));
         add(Layer.cloud, new Background(R.mipmap.clouds, Metrics.size(R.dimen.cloud_speed)));
 
+        // score
+        score = new Score();
+        add(Layer.ui, score);
+
+        // bouding circle
         collisionPaint = new Paint();
         collisionPaint.setStrokeWidth(5);
         collisionPaint.setStyle(Paint.Style.STROKE);
@@ -104,7 +112,7 @@ public class MainGame {
                 gobj.draw(canvas);
                 if (gobj instanceof CircleCollidable) {
                     CircleCollidable cobj = (CircleCollidable) gobj;
-                    canvas.drawCircle(cobj.getCenterX(), cobj.getCenterY(), cobj.getRadius(), collisionPaint);
+                    //canvas.drawCircle(cobj.getCenterX(), cobj.getCenterY(), cobj.getRadius(), collisionPaint);
                 }
             }
         }
@@ -118,6 +126,8 @@ public class MainGame {
                 gobj.update();
             }
         }
+
+        score.add(frameTime);
     }
 
     public void add(Layer layer, GameObject gameObject) {

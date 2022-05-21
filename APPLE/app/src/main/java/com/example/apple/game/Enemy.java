@@ -90,7 +90,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     }
 
     public int getScore() {
-        return 100;
+        return MainGame.stage * 5;
     }
 
     @Override
