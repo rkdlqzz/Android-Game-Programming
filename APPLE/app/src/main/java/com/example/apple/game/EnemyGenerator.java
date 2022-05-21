@@ -49,7 +49,7 @@ public class EnemyGenerator implements GameObject {
         boolean error;
         int speedError; // enemy 속도(dx, dy) 오차
 
-        switch(MainGame.getInstance().stage) {
+        switch(MainGame.getInstance().stage.get()) {
             case 1:
                 // stage 1 - 상단에서만 enemy 스폰
                 // dy는 양수만 (위로 이동 x)

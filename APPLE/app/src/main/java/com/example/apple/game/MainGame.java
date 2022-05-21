@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.apple.R;
@@ -41,14 +42,15 @@ public class MainGame {
     private Apple apple;
     private Joystick joystick;
     public Score score;
-    public static int stage;
+    public Stage stage;
+
 
     public void init() {
-        stage = 1;
-
         initLayers(Layer.COUNT.ordinal());
 
         // manager
+        stage = new Stage();
+        add(Layer.manager, stage);
         add(Layer.manager, new EnemyGenerator());
         add(Layer.manager, new ItemGenerator());
         add(Layer.manager, new CollisionChecker());
@@ -126,8 +128,6 @@ public class MainGame {
                 gobj.update();
             }
         }
-
-        score.add(frameTime);
     }
 
     public void add(Layer layer, GameObject gameObject) {

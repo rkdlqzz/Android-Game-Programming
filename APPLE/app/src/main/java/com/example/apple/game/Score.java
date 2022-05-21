@@ -40,6 +40,8 @@ public class Score implements GameObject {
 
     @Override
     public void update() {
+        add(MainGame.getInstance().frameTime);  // 플레이한 시간만큼 score 추가
+
         int diff = (int) score - displayScore;
         if (diff == 0) return;
         if (-10 < diff && diff < 0) {
