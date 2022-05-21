@@ -2,7 +2,6 @@ package com.example.apple.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 
 import com.example.apple.R;
 import com.example.apple.framework.BitmapPool;
@@ -75,11 +74,6 @@ public class Apple extends Sprite implements CircleCollidable {
     }
 
     @Override
-    public RectF getBoundingRect() {
-        return dstRect;
-    }
-
-    @Override
     public float getCenterX() {
         return x;
     }
@@ -94,7 +88,7 @@ public class Apple extends Sprite implements CircleCollidable {
         return radius;
     }
 
-    public void getItem(int type, float duration) {
+    public void useItem(int type, float duration) {
         switch (type) {
             case 0:     // speed up
                 durationSpeedUp = duration;

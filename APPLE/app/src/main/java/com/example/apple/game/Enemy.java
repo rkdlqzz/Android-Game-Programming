@@ -1,7 +1,5 @@
 package com.example.apple.game;
 
-import android.graphics.Canvas;
-import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.apple.R;
@@ -16,10 +14,10 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     public static float FRAMES_PER_SECOND = 10.0f;  // 초기 애니메이션 속도 (후에 스테이지 증가 시 증가하도록)
     public static float size = Metrics.width / 6;   // enemy의 크기
     protected float dx, dy;
-    public int side;    // enemy가 생성된 사이드 (상, 좌, 우) (stage 1 - 상 / 2 - 상, 좌 / 3 - 상, 좌, 우)
+    public int side;    // enemy가 생성된 사이드 (상, 좌, 우) (stage 1 - 상 / 2 - 상, 우 / 3 - 상, 우, 좌)
 
     public enum Side {
-        top, left, right
+        top, right, left
     }
 
     public static Enemy get(float x, float y, float dx, float dy, int side) {
@@ -69,22 +67,22 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     private void checkOutOfScreen(MainGame game) {
         // side에 따라서 remove 조건 다르게 적용
         switch (side) {
-            case 0: // Side.top - 상단에서 스폰
+            case 0:     // Side.top - 상단에서 스폰
                 if (dstRect.top > Metrics.height || dstRect.right < 0 || dstRect.left > Metrics.width) {
                     game.remove(this);
-                    Log.d(TAG, "remove side 0");
+                    //Log.d(TAG, "remove side 0");
                 }
                 break;
-            case 1: // Side.left - 좌측에서 스폰
-                if (dstRect.left > Metrics.width || dstRect.top > Metrics.height || dstRect.bottom < 0) {
-                    game.remove(this);
-                    Log.d(TAG, "remove side 1");
-                }
-                break;
-            case 2: // Side.right - 우측에서 스폰
+            case 1:     // Side.right - 우측에서 스폰
                 if (dstRect.right < 0 || dstRect.top > Metrics.height || dstRect.bottom < 0) {
                     game.remove(this);
-                    Log.d(TAG, "remove side 2");
+                    //Log.d(TAG, "remove side 1");
+                }
+                break;
+            case 2:     // Side.left - 좌측에서 스폰
+                if (dstRect.left > Metrics.width || dstRect.top > Metrics.height || dstRect.bottom < 0) {
+                    game.remove(this);
+                    //Log.d(TAG, "remove side 2");
                 }
                 break;
             default:
@@ -94,11 +92,6 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
 
     public int getScore() {
         return MainGame.getInstance().stage.get() * 5;
-    }
-
-    @Override
-    public RectF getBoundingRect() {
-        return dstRect;
     }
 
     @Override
