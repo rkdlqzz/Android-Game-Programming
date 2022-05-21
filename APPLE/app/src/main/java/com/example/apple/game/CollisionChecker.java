@@ -3,7 +3,6 @@ package com.example.apple.game;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.example.apple.app.MainActivity;
 import com.example.apple.framework.CollisionHelper;
 import com.example.apple.framework.GameObject;
 
@@ -18,6 +17,7 @@ public class CollisionChecker implements GameObject {
         ArrayList<GameObject> players = game.objectsAt(MainGame.Layer.player);
         ArrayList<GameObject> enemies = game.objectsAt(MainGame.Layer.enemy);
         ArrayList<GameObject> items = game.objectsAt(MainGame.Layer.item);
+        ArrayList<GameObject> bombs = game.objectsAt(MainGame.Layer.bomb);
 
         // enemy - player
         for (GameObject o1 : enemies) {
@@ -42,6 +42,22 @@ public class CollisionChecker implements GameObject {
             if (collided) {
                 continue;
             }
+            // enemy - leaf bomb
+            for (GameObject o2 : bombs) {
+                if (!(o2 instanceof LeafBomb)) {
+                    continue;
+                }
+                LeafBomb bomb = (LeafBomb) o2;
+                if (CollisionHelper.collides(enemy, bomb)) {
+                    game.remove(enemy);
+                    game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
+                continue;
+            }
         }
 
         // item - player
@@ -58,7 +74,7 @@ public class CollisionChecker implements GameObject {
                 Apple player = (Apple) o2;
                 if (CollisionHelper.collides(item, player)) {
                     game.remove(item);
-                    player.getItem(item.getType(), item.getDuration());
+                    item.useItem(player);
                     collided = true;
                     break;
                 }
