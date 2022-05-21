@@ -72,16 +72,19 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
             case 0: // Side.top - 상단에서 스폰
                 if (dstRect.top > Metrics.height || dstRect.right < 0 || dstRect.left > Metrics.width) {
                     game.remove(this);
+                    Log.d(TAG, "remove side 0");
                 }
                 break;
             case 1: // Side.left - 좌측에서 스폰
                 if (dstRect.left > Metrics.width || dstRect.top > Metrics.height || dstRect.bottom < 0) {
                     game.remove(this);
+                    Log.d(TAG, "remove side 1");
                 }
                 break;
             case 2: // Side.right - 우측에서 스폰
                 if (dstRect.right < 0 || dstRect.top > Metrics.height || dstRect.bottom < 0) {
                     game.remove(this);
+                    Log.d(TAG, "remove side 2");
                 }
                 break;
             default:
