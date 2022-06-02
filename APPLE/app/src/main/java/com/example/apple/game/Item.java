@@ -70,6 +70,14 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 MainGame.getInstance().add(MainGame.Layer.bomb, new LeafBomb(x, y, size, duration));
                 break;
             case 2:     // wood shield
+                if (player.shield == null) {
+                    WoodShield shield = new WoodShield(x, y, size, duration);
+                    MainGame.getInstance().add(MainGame.Layer.shield, shield);
+                    player.shield = shield;
+                }
+                else {
+                    player.shield.setDuration(duration);
+                }
                 break;
             default:
                 break;

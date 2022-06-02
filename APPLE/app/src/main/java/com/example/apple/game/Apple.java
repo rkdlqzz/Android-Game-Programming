@@ -21,6 +21,7 @@ public class Apple extends Sprite implements CircleCollidable {
     public float durationSpeedUp;
     private Bitmap bitmapRedApple;
     private Bitmap bitmapGreenApple;
+    public WoodShield shield;
 
     public Apple(float x, float y, Joystick joystick) {
         super(x, y, R.dimen.apple_radius, R.mipmap.apple_red);
@@ -55,7 +56,7 @@ public class Apple extends Sprite implements CircleCollidable {
             durationSpeedUp -= frameTime;
             speed = Metrics.size(R.dimen.apple_green_speed);
 
-            if (durationSpeedUp < 1.5f) {   // SpeedUp 지속시간이 1초 남은 경우 깜빡이도록
+            if (durationSpeedUp < 1.5f) {   // SpeedUp 지속시간이 1.5초 남은 경우 깜빡이도록
                 if (bitmap == bitmapRedApple)
                     bitmap = bitmapGreenApple;
                 else bitmap = bitmapRedApple;
