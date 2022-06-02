@@ -24,7 +24,7 @@ public class ItemGenerator implements GameObject {
     public void update() {
         MainGame game = MainGame.getInstance();
         float frameTime = game.frameTime;
-        Log.d(TAG, "NumOfItem : " + game.objectsAt(MainGame.Layer.item).size());
+        //Log.d(TAG, "NumOfItem : " + game.objectsAt(MainGame.Layer.item).size());
 
         // maxItem 이상은 item spawn하지 않도록
         if (game.objectsAt(MainGame.Layer.item).size() >= MAX_ITEM[game.stage.get() - 1]) return;
@@ -46,6 +46,10 @@ public class ItemGenerator implements GameObject {
 
         // type, bitmapResId
         type = random.nextInt(3);
+        // 디버깅용
+        //type = 0;
+        //type = 1;
+        //type = 2;
         switch (type) {
             case 0:
                 bitmapResId = R.mipmap.item_green_apple;

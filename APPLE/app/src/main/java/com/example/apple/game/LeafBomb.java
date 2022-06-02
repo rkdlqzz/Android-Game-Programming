@@ -1,13 +1,17 @@
 package com.example.apple.game;
 
+import android.util.Log;
+
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
 import com.example.apple.framework.CircleCollidable;
+import com.example.apple.framework.Metrics;
 
 public class LeafBomb extends AnimSprite implements CircleCollidable {
-    public static float MAX_RADIUS = 400.0f;
+    private static final String TAG = LeafBomb.class.getSimpleName();
+    public static float MAX_RADIUS = Metrics.width / (float) 3.3f;
     public static float ROTATION_SPEED = 3.5f;
-    public static float GROWING_SPEED = 500.0f;
+    public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
     private float duration;
 
     public LeafBomb(float x, float y, float size, float duration) {
@@ -31,8 +35,7 @@ public class LeafBomb extends AnimSprite implements CircleCollidable {
         } else {
             if (radius > 0.0f) {
                 radius -= game.frameTime * GROWING_SPEED;
-            }
-            else {
+            } else {
                 game.remove(this);
             }
         }
