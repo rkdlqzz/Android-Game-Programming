@@ -45,12 +45,13 @@ public class ItemGenerator implements GameObject {
         x = Metrics.width * 0.1f + random.nextInt((int) (Metrics.width * 0.8f));   // width의 0.1~0.9 사이의 x값
 
         // type
-        type = random.nextInt(4);
+        type = random.nextInt(5);
         // 디버깅용
         //type = 0;
         //type = 1;
         //type = 2;
         //type = 3;
+        //type = 4;
 
         Item item = Item.get(x, fallSpeed, type);
         MainGame.getInstance().add(MainGame.Layer.item, item);

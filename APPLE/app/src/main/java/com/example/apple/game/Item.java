@@ -14,12 +14,13 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
     private static final String TAG = Item.class.getSimpleName();
     protected static int[] bitmapIds = {
             R.mipmap.item_green_apple, R.mipmap.item_leaf_bomb,
-            R.mipmap.item_wood_shield, R.mipmap.item_safe_zone
+            R.mipmap.item_wood_shield, R.mipmap.item_safe_zone,
+            R.mipmap.item_seed
     };
     public static float size = Metrics.width / 6;   // item의 크기
     private float dy;
     protected int type;
-    protected float[] durations = {0, 0, 0, 0};
+    protected float[] durations = {0, 0, 0, 0, 0};
     protected float duration;
 
     public static Item get(float x, float dy, int type) {
@@ -81,6 +82,9 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 break;
             case 3:     // safe zone
                 MainGame.getInstance().add(MainGame.Layer.zone, new SafeZone(x, y, size));
+                break;
+            case 4:     // seed bullet
+                player.setNumOfBullet(15);
                 break;
             default:
                 break;
