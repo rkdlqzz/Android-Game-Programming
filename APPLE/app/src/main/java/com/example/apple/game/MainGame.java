@@ -36,7 +36,7 @@ public class MainGame {
     public float frameTime;
     protected ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        bg, item, enemy, bomb, zone, shield, player, cloud, controller, ui, manager, COUNT
+        bg, item, enemy, bomb, zone, shield, bullet, player, cloud, controller, ui, manager, COUNT
     }
     public Apple apple;
     private Joystick joystick;

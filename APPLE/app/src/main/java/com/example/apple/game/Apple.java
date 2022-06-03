@@ -22,6 +22,9 @@ public class Apple extends Sprite implements CircleCollidable {
     private Bitmap bitmapRedApple;
     private Bitmap bitmapGreenApple;
     public WoodShield shield;
+    private int numOfBullet;
+    private float elapsedTimeForFire;
+    private float fireInterval = 0.2f;
 
     public Apple(float x, float y, Joystick joystick) {
         super(x, y, R.dimen.apple_radius, R.mipmap.apple_red);
@@ -43,6 +46,8 @@ public class Apple extends Sprite implements CircleCollidable {
         dy = (float) joystick.GetActuatorY() * speed * frameTime;
         y += dy;
         angle = (float) joystick.GetAngleRadian();
+
+        checkHasBulletAndFire(frameTime);
     }
 
     private void updateSpeedUp(float frameTime) {
@@ -101,5 +106,31 @@ public class Apple extends Sprite implements CircleCollidable {
             default:
                 break;
         }
+    }
+
+    public int getNumOfBullet() {
+        return numOfBullet;
+    }
+
+    public void setNumOfBullet(int value) {
+        numOfBullet = value;
+    }
+
+    private void checkHasBulletAndFire(float frameTime) {
+        if (numOfBullet > 0)
+        {
+            elapsedTimeForFire += frameTime;
+            if (elapsedTimeForFire >= fireInterval) {
+                fireSeed();
+                elapsedTimeForFire -= fireInterval;
+            }
+        }
+    }
+
+    public void fireSeed() {
+        MainGame game = MainGame.getInstance();
+        SeedBullet bullet = new SeedBullet(x, y, angle);
+        game.add(MainGame.Layer.bullet, bullet);
+        numOfBullet -= 1;
     }
 }
