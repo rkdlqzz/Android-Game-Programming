@@ -10,7 +10,7 @@ import com.example.apple.framework.Metrics;
 
 public class WoodShield extends AnimSprite implements CircleCollidable {
     public static float MAX_RADIUS = Metrics.width / (float) 5.5f;
-    public static float ROTATION_SPEED = 3.5f;
+    public static float ROTATION_SPEED = 4.5f;
     public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
     private float duration;
     private Bitmap bitmapWoodShield;
