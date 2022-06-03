@@ -19,6 +19,7 @@ public class CollisionChecker implements GameObject {
         ArrayList<GameObject> items = game.objectsAt(MainGame.Layer.item);
         ArrayList<GameObject> bombs = game.objectsAt(MainGame.Layer.bomb);
         ArrayList<GameObject> shields = game.objectsAt(MainGame.Layer.shield);
+        ArrayList<GameObject> zones = game.objectsAt(MainGame.Layer.zone);
 
         // enemy - player
         for (GameObject o1 : enemies) {
@@ -55,6 +56,25 @@ public class CollisionChecker implements GameObject {
                     collided = true;
                     break;
                 }
+            }
+            if (collided) {
+                continue;
+            }
+            // enemy - safe zone
+            for (GameObject o2 : zones) {
+                if (!(o2 instanceof SafeZone)) {
+                    continue;
+                }
+                SafeZone zone = (SafeZone) o2;
+                if (CollisionHelper.collides(enemy, zone)) {
+                    game.remove(enemy);
+                    game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    collided = true;
+                    break;
+                }
+            }
+            if (collided) {
+                continue;
             }
             // enemy - wood shield
             for (GameObject o2 : shields) {
