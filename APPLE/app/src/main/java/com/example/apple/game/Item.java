@@ -12,22 +12,27 @@ import com.example.apple.framework.Sprite;
 
 public class Item extends Sprite implements CircleCollidable, Recyclable {
     private static final String TAG = Item.class.getSimpleName();
+    protected static int[] bitmapIds = {
+            R.mipmap.item_green_apple, R.mipmap.item_leaf_bomb,
+            R.mipmap.item_wood_shield, R.mipmap.item_safe_zone
+    };
     public static float size = Metrics.width / 6;   // item의 크기
     private float dy;
     protected int type;
+    protected float[] durations = {0, 0, 0, 0};
     protected float duration;
 
-    public static Item get(float x, float dy, int type, int bitmapResId) {
+    public static Item get(float x, float dy, int type) {
         Item item = (Item) RecycleBin.get(Item.class);
         if (item != null) {
-            item.set(x, dy, type, bitmapResId);
+            item.set(x, dy, type);
             return item;
         }
-        return new Item(x, dy, type, bitmapResId);
+        return new Item(x, dy, type);
     }
 
-    private void set(float x, float dy, int type, int bitmapResId) {
-        bitmap = BitmapPool.get(bitmapResId);
+    private void set(float x, float dy, int type) {
+        bitmap = BitmapPool.get(bitmapIds[type]);
         this.x = x;
         this.y = -size;
         this.dy = dy;
@@ -37,30 +42,23 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
         //Log.d(TAG, "Recycle Item");
     }
 
-    public Item(float x, float dy, int type, int bitmapResId) {
-        super(x, -size, size, size, bitmapResId);
+    public Item(float x, float dy, int type) {
+        super(x, -size, size, size, bitmapIds[type]);
 
         this.dy = dy;
         this.type = type;
+
+        durations[0] = Metrics.floatValue(R.dimen.item_speed_up_duration);
+        durations[1] = Metrics.floatValue(R.dimen.item_leaf_bomb_duration);
+        durations[2] = Metrics.floatValue(R.dimen.item_wood_shield_duration);
+
         setItemDuration();
 
         //Log.d(TAG, "Create Item");
     }
 
     private void setItemDuration() {
-        switch (type) {
-            case 0:     // speed up
-                duration = Metrics.floatValue(R.dimen.item_speed_up_duration);
-                break;
-            case 1:     // leaf bomb
-                duration = Metrics.floatValue(R.dimen.item_leaf_bomb_duration);
-                break;
-            case 2:     // wood shield
-                duration = Metrics.floatValue(R.dimen.item_wood_shield_duration);
-                break;
-            default:
-                break;
-        }
+        duration = durations[type];
     }
 
     public void useItem(Apple player) {

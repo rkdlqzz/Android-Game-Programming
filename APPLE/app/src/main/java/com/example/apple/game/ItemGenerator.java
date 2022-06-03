@@ -39,35 +39,20 @@ public class ItemGenerator implements GameObject {
     private void spawn() {
         Random random = new Random();
         float x;
-        int type, bitmapResId = 0;
+        int type;
 
         // x
         x = Metrics.width * 0.1f + random.nextInt((int) (Metrics.width * 0.8f));   // width의 0.1~0.9 사이의 x값
 
-        // type, bitmapResId
+        // type
         type = random.nextInt(4);
         // 디버깅용
         //type = 0;
         //type = 1;
         //type = 2;
-        type = 3;
-        switch (type) {
-            case 0:
-                bitmapResId = R.mipmap.item_green_apple;
-                break;
-            case 1:
-                bitmapResId = R.mipmap.item_leaf_bomb;
-                break;
-            case 2:
-                bitmapResId = R.mipmap.item_wood_shield;
-                break;
-            case 3:
-                bitmapResId = R.mipmap.item_safe_zone;
-            default:
-                break;
-        }
+        //type = 3;
 
-        Item item = Item.get(x, fallSpeed, type, bitmapResId);
+        Item item = Item.get(x, fallSpeed, type);
         MainGame.getInstance().add(MainGame.Layer.item, item);
     }
 
