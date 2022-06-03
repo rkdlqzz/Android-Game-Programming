@@ -45,11 +45,12 @@ public class ItemGenerator implements GameObject {
         x = Metrics.width * 0.1f + random.nextInt((int) (Metrics.width * 0.8f));   // width의 0.1~0.9 사이의 x값
 
         // type, bitmapResId
-        type = random.nextInt(3);
+        type = random.nextInt(4);
         // 디버깅용
         //type = 0;
         //type = 1;
         //type = 2;
+        type = 3;
         switch (type) {
             case 0:
                 bitmapResId = R.mipmap.item_green_apple;
@@ -60,6 +61,8 @@ public class ItemGenerator implements GameObject {
             case 2:
                 bitmapResId = R.mipmap.item_wood_shield;
                 break;
+            case 3:
+                bitmapResId = R.mipmap.item_safe_zone;
             default:
                 break;
         }

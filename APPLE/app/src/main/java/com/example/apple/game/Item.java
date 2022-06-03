@@ -58,6 +58,8 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
             case 2:     // wood shield
                 duration = Metrics.floatValue(R.dimen.item_wood_shield_duration);
                 break;
+            default:
+                break;
         }
     }
 
@@ -78,6 +80,9 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 else {
                     player.shield.setDuration(duration);
                 }
+                break;
+            case 3:     // safe zone
+                MainGame.getInstance().add(MainGame.Layer.zone, new SafeZone(x, y, size));
                 break;
             default:
                 break;
