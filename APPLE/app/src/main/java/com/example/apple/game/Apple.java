@@ -18,7 +18,7 @@ public class Apple extends Sprite implements CircleCollidable {
     private final Joystick joystick;
 
     private float speed;
-    public float durationSpeedUp;
+    private float durationSpeedUp;
     private Bitmap bitmapRedApple;
     private Bitmap bitmapGreenApple;
     public WoodShield shield;
@@ -94,22 +94,8 @@ public class Apple extends Sprite implements CircleCollidable {
         return radius;
     }
 
-    public void useItem(int type, float duration) {
-        switch (type) {
-            case 0:     // speed up
-                durationSpeedUp = duration;
-                break;
-            case 1:     // leaf bomb
-                break;
-            case 2:     // wood shield
-                break;
-            default:
-                break;
-        }
-    }
-
-    public int getNumOfBullet() {
-        return numOfBullet;
+    public void setDurationSpeedUp(float value) {
+        durationSpeedUp = value;
     }
 
     public void setNumOfBullet(int value) {

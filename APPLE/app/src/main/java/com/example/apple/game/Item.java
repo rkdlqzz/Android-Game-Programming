@@ -65,7 +65,7 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
     public void useItem(Apple player) {
         switch (type) {
             case 0:     // speed up
-                player.useItem(type, duration);
+                player.setDurationSpeedUp(duration);
                 break;
             case 1:     // leaf bomb
                 MainGame.getInstance().add(MainGame.Layer.bomb, new LeafBomb(x, y, size, duration));
@@ -121,12 +121,5 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
 
     @Override
     public void finish() {
-    }
-
-    public int getType() {
-        return type;
-    }
-    public float getDuration() {
-        return duration;
     }
 }
