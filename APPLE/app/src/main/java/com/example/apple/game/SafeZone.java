@@ -10,6 +10,7 @@ import com.example.apple.framework.Metrics;
 public class SafeZone extends AnimSprite implements CircleCollidable {
     private static final String TAG = SafeZone.class.getSimpleName();
     public static float MAX_RADIUS = Metrics.width / (float) 6.0f;
+    public static float MAX_ROTATION = 15.0f;
     public static float ROTATION_SPEED = 0.5f;
     public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
     protected float dy ,da;
@@ -30,9 +31,9 @@ public class SafeZone extends AnimSprite implements CircleCollidable {
         y -= dy * game.frameTime;
 
         // 좌우로 회전하도록
-        if (da > 0 && (angle * 180 / Math.PI + 90.0f) > 15.0f)
+        if (da > 0 && (angle * 180 / Math.PI + 90.0f) > MAX_ROTATION)
             da = -da;
-        if (da < 0 && (angle * 180 / Math.PI + 90.0f) < -15.0f)
+        if (da < 0 && (angle * 180 / Math.PI + 90.0f) < -MAX_ROTATION)
             da = -da;
         angle += game.frameTime * da;
 

@@ -7,7 +7,7 @@ import android.graphics.RectF;
 public class Sprite implements GameObject {
     protected Bitmap bitmap;
     protected RectF dstRect = new RectF();
-    protected float x, y, radius;
+    public float x, y, radius;
 
     public Sprite(float x, float y, int radiusDimenResId, int bitmapResId) {
         this.x = x;

@@ -13,7 +13,7 @@ public class Stage implements GameObject {
     private float playTime;
 
     public Stage() {
-        this.stage = 1;
+        this.stage = 3;
     }
 
     public int get() {
@@ -23,6 +23,7 @@ public class Stage implements GameObject {
     @Override
     public void update() {
         playTime += MainGame.getInstance().frameTime;
+        // 디버깅용 - 주석 해제
         //stage = 1 + (int) (playTime / stagePeriod);
         stage = stage <= maxStage ? stage : maxStage;
 
