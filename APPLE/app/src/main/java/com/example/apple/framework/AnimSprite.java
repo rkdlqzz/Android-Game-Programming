@@ -14,6 +14,7 @@ public class AnimSprite extends Sprite {
 
     public boolean rotate;
     public float angle;
+    private boolean isFreeze;
 
     public AnimSprite(float x, float y, float w, float h, int bitmapResId, float framesPerSecond, int frameCount) {
         super(x, y, w, h, bitmapResId);
@@ -41,16 +42,24 @@ public class AnimSprite extends Sprite {
         long now = System.currentTimeMillis();
         float time = (now - createdOn) / 1000.0f;
         int index = Math.round(time * framesPerSecond) % frameCount;
-        srcRect.set(index * imageWidth, 0, (index + 1) * imageWidth, imageHeight);
+        if (!isFreeze)
+            srcRect.set(index * imageWidth, 0, (index + 1) * imageWidth, imageHeight);
 
         if (rotate) {
             canvas.save();
             canvas.rotate((float) (angle * 180 / Math.PI) + 90, x, y);
             canvas.drawBitmap(bitmap, srcRect, dstRect, null);
             canvas.restore();
-        }
-        else {
+        } else {
             canvas.drawBitmap(bitmap, srcRect, dstRect, null);
         }
+    }
+
+    public void setFreeze(boolean value) {
+        isFreeze = value;
+    }
+
+    public boolean getFreeze() {
+        return isFreeze;
     }
 }
