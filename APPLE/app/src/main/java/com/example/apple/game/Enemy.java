@@ -1,5 +1,6 @@
 package com.example.apple.game;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.apple.R;
@@ -15,6 +16,11 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     public static float size = Metrics.width / 6;   // enemy의 크기
     protected float dx, dy;
     public int side;    // enemy가 생성된 사이드 (상, 좌, 우) (stage 1 - 상 / 2 - 상, 우 / 3 - 상, 우, 좌)
+    private AnimSprite spriteIceCude;
+    private float freezeDuration;
+    public static float ICE_CUBE_MAX_ROTATION = 8.0f;
+    public static float ICE_CUBE_ROTATION_SPEED = 6.0f;
+    protected float iceCubeDA;
 
     public enum Side {
         top, right, left
@@ -37,6 +43,11 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
         this.side = side;
         angle = (float) Math.atan2(-dy, -dx);
 
+        setFreeze(false);
+        updateIceCube();
+        spriteIceCude.angle = angle;
+        iceCubeDA = ICE_CUBE_ROTATION_SPEED;
+
         //Log.d(TAG, "Recycle Enemy");
     }
 
@@ -49,6 +60,12 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
         rotate = true;
         angle = (float) Math.atan2(-dy, -dx);
 
+        spriteIceCude = new AnimSprite(x, y, size * 1.2f, size * 1.2f, R.mipmap.ice_cube, 1.0f, 0);
+        spriteIceCude.rotate = true;
+        updateIceCube();
+        spriteIceCude.angle = angle;
+        iceCubeDA = ICE_CUBE_ROTATION_SPEED;
+
         //Log.d(TAG, "Create Enemy x : " + x + "  y : " + y + "  dx : " + dx + "  dy : " + dy);
     }
 
@@ -56,12 +73,26 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     public void update() {
         MainGame game = MainGame.getInstance();
         float frameTime = game.frameTime;
+
+        updateFreeze(frameTime);
+        if (getFreeze()) return;
+
         x += dx * frameTime;
         y += dy * frameTime;
 
         setDstRectWithRadius();
 
         checkOutOfScreen(game);
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        // freeze 상태인 경우 ice cude를 draw
+        if (getFreeze()) {
+            spriteIceCude.draw(canvas);
+        }
     }
 
     private void checkOutOfScreen(MainGame game) {
@@ -111,5 +142,36 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
 
     @Override
     public void finish() {
+    }
+
+    private void updateFreeze(float frameTime) {
+        updateIceCube();
+
+        if (freezeDuration <= 0.0f) {
+            setFreeze(false);
+            freezeDuration = 0.0f;
+            spriteIceCude.angle = angle;
+            iceCubeDA = ICE_CUBE_ROTATION_SPEED;
+        } else {
+            freezeDuration -= frameTime;
+
+            if (freezeDuration < 1.5f) {   // freeze 지속시간이 1.5초 남은 경우 좌우로 회전하도록
+                if (iceCubeDA > 0 && (spriteIceCude.angle * 180 / Math.PI) > (angle * 180 / Math.PI) + ICE_CUBE_MAX_ROTATION)
+                    iceCubeDA = -iceCubeDA;
+                if (iceCubeDA < 0 && (spriteIceCude.angle * 180 / Math.PI) < (angle * 180 / Math.PI) - ICE_CUBE_MAX_ROTATION)
+                    iceCubeDA = -iceCubeDA;
+                spriteIceCude.angle += frameTime * iceCubeDA;
+            }
+        }
+    }
+
+    private void updateIceCube() {
+        spriteIceCude.x = x;
+        spriteIceCude.y = y;
+        spriteIceCude.setDstRectWithRadius();
+    }
+
+    public void setFreezeDuration(float value) {
+        freezeDuration = value;
     }
 }
