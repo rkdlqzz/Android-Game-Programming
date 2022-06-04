@@ -35,10 +35,16 @@ public class CollisionChecker implements GameObject {
                 }
                 Apple player = (Apple) o2;
                 if (CollisionHelper.collides(enemy, player)) {
-                    game.remove(enemy);
-                    game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
-                    //System.exit(0); // player와 enemy 충돌 시 게임오버    finish()?
-                    collided = true;
+                    // freeze 상태인 enemy와 충돌 시 적 제거
+                    if (enemy.getFreeze()) {
+                        game.remove(enemy);
+                        game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                        collided = true;
+                    }
+                    else
+                    {
+                        //System.exit(0); // player와 enemy 충돌 시 게임오버    finish()?
+                    }
                     break;
                 }
             }
