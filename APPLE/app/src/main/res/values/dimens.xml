@@ -21,4 +21,5 @@
     <item name="item_speed_up_duration" type="dimen" format="float">5.0</item>
     <item name="item_leaf_bomb_duration" type="dimen" format="float">3.5</item>
     <item name="item_wood_shield_duration" type="dimen" format="float">5.0</item>
+    <item name="item_freeze_duration" type="dimen" format="float">5.0</item>
 </resources>
