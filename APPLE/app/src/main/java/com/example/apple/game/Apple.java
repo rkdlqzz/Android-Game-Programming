@@ -92,7 +92,7 @@ public class Apple extends Sprite implements CircleCollidable {
 
     @Override
     public float getRadius() {
-        return radius;
+        return radius - radius * 0.07f;
     }
 
     public void setDurationSpeedUp(float value) {

@@ -137,7 +137,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
 
     @Override
     public float getRadius() {
-        return radius;
+        return radius - size * 0.08f;
     }
 
     @Override
