@@ -17,6 +17,10 @@ public class Scene {
         return sceneStack.get(lastIndex);
     }
     public static void clear() {
+        while (sceneStack.size() > 0) {
+            Scene scene = sceneStack.remove(0);
+            scene.end();
+        }
         sceneStack.clear();
     }
     protected ArrayList<ArrayList<GameObject>> layers;
