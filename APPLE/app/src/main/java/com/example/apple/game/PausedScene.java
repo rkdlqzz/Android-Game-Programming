@@ -33,11 +33,11 @@ public class PausedScene extends Scene {
         float btn_width = Metrics.size(R.dimen.button_width);
         float btn_height = Metrics.size(R.dimen.button_height);
         float btn_x = Metrics.width / 2;
-        float btn_y = Metrics.height / 2 + btn_height / 2;
+        float btn_y = Metrics.height / 2 - btn_height / 2;
 
         add(Layer.touchUi.ordinal(), new Button(
                 btn_x, btn_y, btn_width, btn_height,
-                R.mipmap.start_button, R.mipmap.start_button_p, new Button.Callback()
+                R.mipmap.resume_button, R.mipmap.resume_button_p, new Button.Callback()
         {
             @Override
             public boolean onTouch(Button.Action action) {
