@@ -2,10 +2,11 @@ package com.example.apple.framework;
 
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.example.apple.R;
 
-public class Joystick implements GameObject {
+public class Joystick implements GameObject, Touchable {
     private static final String TAG = Joystick.class.getSimpleName();
     private Sprite outCircle;
     private Sprite inCircle;
@@ -92,5 +93,24 @@ public class Joystick implements GameObject {
 
     public double GetAngleRadian() {
         return angle;
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                SetIsPressed(event.getX(), event.getY());
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                if (GetIsPressed()) {
+                    SetActuator(event.getX(), event.getY());
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                SetIsPressed(false);
+                ResetActuator();
+                return true;
+        }
+        return false;
     }
 }

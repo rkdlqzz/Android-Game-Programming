@@ -1,14 +1,10 @@
 package com.example.apple.game;
 
-import android.view.MotionEvent;
-
 import com.example.apple.R;
 import com.example.apple.framework.Scene;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
-
-import java.util.ArrayList;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -21,7 +17,7 @@ public class MainScene extends Scene {
     }
 
     public enum Layer {
-        bg, item, enemy, bomb, zone, shield, bullet, player, cloud, controller, ui, manager, COUNT
+        bg, item, enemy, bomb, zone, shield, bullet, player, cloud, ui, touchUi, manager, COUNT
     }
     public Apple apple;
     private Joystick joystick;
@@ -43,7 +39,7 @@ public class MainScene extends Scene {
         float jx = Metrics.width / 3.5f;
         float jy = Metrics.height - Metrics.height / 6.0f;
         joystick = new Joystick(jx, jy);
-        add(Layer.controller, joystick);
+        add(Layer.touchUi, joystick);
 
         // apple
         float fx = Metrics.width / 2;
@@ -60,30 +56,18 @@ public class MainScene extends Scene {
         add(Layer.ui, score);
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                joystick.SetIsPressed((double) event.getX(), (double) event.getY());
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                if (joystick.GetIsPressed()) {
-                    joystick.SetActuator((double) event.getX(), (double) event.getY());
-                }
-                return true;
-            case MotionEvent.ACTION_UP:
-                joystick.SetIsPressed(false);
-                joystick.ResetActuator();
-                return true;
-        }
-        return false;
-    }
-
     public void add(Layer layer, GameObject gameObject) {
         add(layer.ordinal(), gameObject);
     }
 
-    public ArrayList<GameObject> objectsAt(Layer layer) {
-        return layers.get(layer.ordinal());
+    @Override
+    public boolean handleBackKey() {
+        push(PausedScene.get());
+        return true;
+    }
+
+    @Override
+    protected int getTouchLayerIndex() {
+        return Layer.touchUi.ordinal();
     }
 }

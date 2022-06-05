@@ -1,6 +1,7 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.apple.framework.GameObject;
 
@@ -13,7 +14,7 @@ public class Stage implements GameObject {
     private float playTime;
 
     public Stage() {
-        this.stage = 3;
+        this.stage = 1;
     }
 
     public int get() {
