@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.BitmapPool;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
@@ -27,9 +28,10 @@ public class WoodShield extends AnimSprite implements CircleCollidable {
 
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
-        duration -= game.frameTime;
-        angle += game.frameTime * ROTATION_SPEED;
+        float frameTime = BaseGame.getInstance().frameTime;
+        MainGame game = MainGame.get();
+        duration -= frameTime;
+        angle += frameTime * ROTATION_SPEED;
 
         // player에 붙어있도록
         x = game.apple.getCenterX();
@@ -37,7 +39,7 @@ public class WoodShield extends AnimSprite implements CircleCollidable {
 
         // 최대크기까지 커지도록
         if (radius < MAX_RADIUS) {
-            radius += game.frameTime * GROWING_SPEED;
+            radius += frameTime * GROWING_SPEED;
         }
 
         // 지속시간이 1.5초 남으면 깜빡이다가 끝나면 삭제되도록

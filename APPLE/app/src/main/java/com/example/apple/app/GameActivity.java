@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.GameView;
 import com.example.apple.game.MainGame;
 
@@ -12,6 +13,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainGame.get();
         setContentView(new GameView(this, null));
     }
 
@@ -30,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         GameView.view = null;
-        MainGame.clear();
+        BaseGame.clear();
         super.onDestroy();
     }
 }

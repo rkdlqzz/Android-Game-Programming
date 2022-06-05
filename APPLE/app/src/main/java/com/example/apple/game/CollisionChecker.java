@@ -13,7 +13,7 @@ public class CollisionChecker implements GameObject {
 
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
+        MainGame game = MainGame.get();
         ArrayList<GameObject> players = game.objectsAt(MainGame.Layer.player);
         ArrayList<GameObject> enemies = game.objectsAt(MainGame.Layer.enemy);
         ArrayList<GameObject> items = game.objectsAt(MainGame.Layer.item);

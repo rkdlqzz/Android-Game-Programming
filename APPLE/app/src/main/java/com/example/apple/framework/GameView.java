@@ -10,8 +10,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.apple.game.MainGame;
-
 public class GameView extends View implements Choreographer.FrameCallback {
     public static GameView view;
     private static final String TAG = GameView.class.getSimpleName();
@@ -47,11 +45,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
         }
 
         long now = currentTimeNanos;
+        if (lastTimeNanos == 0) {
+            lastTimeNanos = now;
+        }
         int elapsed = (int) (now - lastTimeNanos);
         if (elapsed != 0) {
             framesPerSecond = 1_000_000_000 / elapsed;
             lastTimeNanos = now;
-            MainGame game = MainGame.getInstance();
+            BaseGame game = BaseGame.getInstance();
             game.update(elapsed);
             invalidate();
         }
@@ -59,17 +60,17 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private void initView() {
-        MainGame.getInstance().init();
+        BaseGame.getInstance().init();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return MainGame.getInstance().onTouchEvent(event);
+        return BaseGame.getInstance().onTouchEvent(event);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        MainGame.getInstance().draw(canvas);
+        BaseGame.getInstance().draw(canvas);
     }
 
     public void pauseGame() {
@@ -80,6 +81,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         if (initialized && !running) {
 
             running = true;
+            lastTimeNanos = 0;
             Choreographer.getInstance().postFrameCallback(this);    // 다시 프레임마다 불리도록
             Log.d(TAG, "Resuming game");
         }

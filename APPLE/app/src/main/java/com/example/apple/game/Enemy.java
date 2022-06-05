@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
 import com.example.apple.framework.Recyclable;
@@ -71,7 +72,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
 
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
+        BaseGame game = BaseGame.getInstance();
         float frameTime = game.frameTime;
 
         updateFreeze(frameTime);
@@ -95,7 +96,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
         }
     }
 
-    private void checkOutOfScreen(MainGame game) {
+    private void checkOutOfScreen(BaseGame game) {
         // side에 따라서 remove 조건 다르게 적용
         switch (side) {
             case 0:     // Side.top - 상단에서 스폰
@@ -122,7 +123,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     }
 
     public int getScore() {
-        return MainGame.getInstance().stage.get() * 5;
+        return MainGame.get().stage.get() * 5;
     }
 
     @Override

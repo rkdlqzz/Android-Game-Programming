@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.apple.R;
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Metrics;
 
@@ -27,8 +28,8 @@ public class EnemyGenerator implements GameObject {
 
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
-        float frameTime = game.frameTime;
+        float frameTime = BaseGame.getInstance().frameTime;
+        MainGame game = MainGame.get();
         //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
 
         // maxEnemy 이상은 enemy spawn하지 않도록
@@ -44,7 +45,7 @@ public class EnemyGenerator implements GameObject {
     private void spawn() {
         float x, y, dx, dy;
         int side = 0;
-        int stage = MainGame.getInstance().stage.get();
+        int stage = MainGame.get().stage.get();
 
         switch (stage) {
             case 1:     // stage 1 - 상단에서만 생성
@@ -68,7 +69,7 @@ public class EnemyGenerator implements GameObject {
         dy = getDy(side, stage);
 
         Enemy enemy = Enemy.get(x, y, dx, dy, side);
-        MainGame.getInstance().add(MainGame.Layer.enemy, enemy);
+        MainGame.get().add(MainGame.Layer.enemy, enemy);
     }
 
     private float getX(int side) {

@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.example.apple.R;
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Metrics;
 
@@ -22,8 +23,8 @@ public class ItemGenerator implements GameObject {
 
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
-        float frameTime = game.frameTime;
+        float frameTime = BaseGame.getInstance().frameTime;
+        MainGame game = MainGame.get();
         //Log.d(TAG, "NumOfItem : " + game.objectsAt(MainGame.Layer.item).size());
 
         // maxItem 이상은 item spawn하지 않도록
@@ -55,7 +56,7 @@ public class ItemGenerator implements GameObject {
         //type = 5;     // freeze
 
         Item item = Item.get(x, fallSpeed, type);
-        MainGame.getInstance().add(MainGame.Layer.item, item);
+        MainGame.get().add(MainGame.Layer.item, item);
     }
 
     @Override

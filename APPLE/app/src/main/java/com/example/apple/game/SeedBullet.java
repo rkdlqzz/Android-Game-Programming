@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
+import com.example.apple.framework.BaseGame;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
 
@@ -26,7 +27,7 @@ public class SeedBullet extends AnimSprite implements CircleCollidable {
     }
     @Override
     public void update() {
-        MainGame game = MainGame.getInstance();
+        BaseGame game = BaseGame.getInstance();
         float frameTime = game.frameTime;
 
         x += dx * speed * frameTime;
