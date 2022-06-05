@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.apple.R;
+
 public class Button extends Sprite implements Touchable {
     private static final String TAG = Button.class.getSimpleName();
     protected final Callback callback;
@@ -41,6 +43,7 @@ public class Button extends Sprite implements Touchable {
                 pressed = true;
                 bitmap = pressedBitmap;
                 Log.d(TAG, "Down: " + pressedBitmap);
+                Sound.playEffect(R.raw.button);
                 callback.onTouch(Action.pressed);
                 return true;
             case MotionEvent.ACTION_UP:

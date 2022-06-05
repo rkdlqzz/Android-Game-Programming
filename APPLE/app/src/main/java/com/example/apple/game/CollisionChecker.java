@@ -2,8 +2,10 @@ package com.example.apple.game;
 
 import android.graphics.Canvas;
 
+import com.example.apple.R;
 import com.example.apple.framework.CollisionHelper;
 import com.example.apple.framework.GameObject;
+import com.example.apple.framework.Sound;
 
 import java.util.ArrayList;
 
@@ -38,11 +40,13 @@ public class CollisionChecker implements GameObject {
                     if (enemy.getFreeze()) {
                         game.remove(enemy);
                         game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                        Sound.playEffect(R.raw.bonus_score);
                         collided = true;
                     }
                     else
                     {
                         // player와 enemy 충돌 시 게임오버
+                        Sound.playEffect(R.raw.game_over);
                         game.push(GameOverScene.get());
                         //System.exit(0);
                     }
@@ -61,6 +65,7 @@ public class CollisionChecker implements GameObject {
                 if (CollisionHelper.collides(enemy, bomb)) {
                     game.remove(enemy);
                     game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    Sound.playEffect(R.raw.bonus_score);
                     collided = true;
                     break;
                 }
@@ -77,6 +82,7 @@ public class CollisionChecker implements GameObject {
                 if (CollisionHelper.collides(enemy, zone)) {
                     game.remove(enemy);
                     game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    Sound.playEffect(R.raw.bonus_score);
                     collided = true;
                     break;
                 }
@@ -93,6 +99,7 @@ public class CollisionChecker implements GameObject {
                 if (CollisionHelper.collides(enemy, shield)) {
                     game.remove(enemy);
                     game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    Sound.playEffect(R.raw.bonus_score);
                     collided = true;
                     break;
                 }
@@ -109,6 +116,7 @@ public class CollisionChecker implements GameObject {
                 if (CollisionHelper.collides(enemy, bullet)) {
                     game.remove(enemy);
                     game.score.add(enemy.getScore());   // 제거한 적의 score만큼 점수 추가
+                    Sound.playEffect(R.raw.bonus_score);
                     collided = true;
                     break;
                 }
@@ -132,6 +140,7 @@ public class CollisionChecker implements GameObject {
                 Apple player = (Apple) o2;
                 if (CollisionHelper.collides(item, player)) {
                     game.remove(item);
+                    Sound.playEffect(R.raw.get_item);
                     item.useItem(player);
                     collided = true;
                     break;
