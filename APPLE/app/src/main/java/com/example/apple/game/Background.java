@@ -18,7 +18,7 @@ public class Background extends Sprite {
 
     @Override
     public void update() {
-        this.y += speed * MainGame.getInstance().frameTime;
+        this.y += speed * MainScene.getInstance().frameTime;
     }
 
     @Override

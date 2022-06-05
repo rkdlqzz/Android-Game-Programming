@@ -1,24 +1,23 @@
 package com.example.apple.game;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.example.apple.R;
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
 
 import java.util.ArrayList;
 
-public class MainGame extends BaseGame {
-    private static final String TAG = MainGame.class.getSimpleName();
-
-    public static MainGame get() {
+public class MainScene extends Scene {
+    private static final String TAG = MainScene.class.getSimpleName();
+    private static MainScene singleton;
+    public static MainScene get() {
         if (singleton == null) {
-            singleton = new MainGame();
+            singleton = new MainScene();
         }
-        return (MainGame) singleton;
+        return singleton;
     }
 
     public enum Layer {

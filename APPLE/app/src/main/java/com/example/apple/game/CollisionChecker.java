@@ -1,7 +1,6 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.apple.framework.CollisionHelper;
 import com.example.apple.framework.GameObject;
@@ -13,14 +12,14 @@ public class CollisionChecker implements GameObject {
 
     @Override
     public void update() {
-        MainGame game = MainGame.get();
-        ArrayList<GameObject> players = game.objectsAt(MainGame.Layer.player);
-        ArrayList<GameObject> enemies = game.objectsAt(MainGame.Layer.enemy);
-        ArrayList<GameObject> items = game.objectsAt(MainGame.Layer.item);
-        ArrayList<GameObject> bombs = game.objectsAt(MainGame.Layer.bomb);
-        ArrayList<GameObject> shields = game.objectsAt(MainGame.Layer.shield);
-        ArrayList<GameObject> zones = game.objectsAt(MainGame.Layer.zone);
-        ArrayList<GameObject> bullets = game.objectsAt(MainGame.Layer.bullet);
+        MainScene game = MainScene.get();
+        ArrayList<GameObject> players = game.objectsAt(MainScene.Layer.player);
+        ArrayList<GameObject> enemies = game.objectsAt(MainScene.Layer.enemy);
+        ArrayList<GameObject> items = game.objectsAt(MainScene.Layer.item);
+        ArrayList<GameObject> bombs = game.objectsAt(MainScene.Layer.bomb);
+        ArrayList<GameObject> shields = game.objectsAt(MainScene.Layer.shield);
+        ArrayList<GameObject> zones = game.objectsAt(MainScene.Layer.zone);
+        ArrayList<GameObject> bullets = game.objectsAt(MainScene.Layer.bullet);
 
         // enemy - player
         for (GameObject o1 : enemies) {

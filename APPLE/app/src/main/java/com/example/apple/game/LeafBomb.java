@@ -1,10 +1,8 @@
 package com.example.apple.game;
 
-import android.util.Log;
-
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
 
@@ -24,7 +22,7 @@ public class LeafBomb extends AnimSprite implements CircleCollidable {
 
     @Override
     public void update() {
-        BaseGame game = BaseGame.getInstance();
+        Scene game = Scene.getInstance();
         duration -= game.frameTime;
         angle += game.frameTime * ROTATION_SPEED;
 

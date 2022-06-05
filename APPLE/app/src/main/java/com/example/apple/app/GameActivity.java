@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.GameView;
-import com.example.apple.game.MainGame;
+import com.example.apple.game.MainScene;
 
 public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainGame.get();
+
+        MainScene game = MainScene.get();
+        Scene.push(game);
+
         setContentView(new GameView(this, null));
     }
 
@@ -32,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         GameView.view = null;
-        BaseGame.clear();
+        Scene.clear();
         super.onDestroy();
     }
 }

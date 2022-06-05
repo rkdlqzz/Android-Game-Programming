@@ -1,9 +1,7 @@
 package com.example.apple.game;
 
-import android.util.Log;
-
 import com.example.apple.R;
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.BitmapPool;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.GameObject;
@@ -73,12 +71,12 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 player.setDurationSpeedUp(duration);
                 break;
             case 1:     // leaf bomb
-                MainGame.get().add(MainGame.Layer.bomb, new LeafBomb(x, y, size, duration));
+                MainScene.get().add(MainScene.Layer.bomb, new LeafBomb(x, y, size, duration));
                 break;
             case 2:     // wood shield
                 if (player.shield == null) {
                     WoodShield shield = new WoodShield(x, y, size, duration);
-                    MainGame.get().add(MainGame.Layer.shield, shield);
+                    MainScene.get().add(MainScene.Layer.shield, shield);
                     player.shield = shield;
                 }
                 else {
@@ -86,13 +84,13 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 }
                 break;
             case 3:     // safe zone
-                MainGame.get().add(MainGame.Layer.zone, new SafeZone(x, y, size));
+                MainScene.get().add(MainScene.Layer.zone, new SafeZone(x, y, size));
                 break;
             case 4:     // seed bullet
                 player.setNumOfBullet(15);
                 break;
             case 5:     // freeze
-                ArrayList<GameObject> enemies = MainGame.get().objectsAt(MainGame.Layer.enemy);
+                ArrayList<GameObject> enemies = MainScene.get().objectsAt(MainScene.Layer.enemy);
                 for (GameObject obj : enemies) {
                     if (!(obj instanceof Enemy)) {
                         continue;
@@ -110,7 +108,7 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
 
     @Override
     public void update() {
-        BaseGame game = BaseGame.getInstance();
+        Scene game = Scene.getInstance();
         float frameTime = game.frameTime;
         y += dy * frameTime;
         setDstRectWithRadius();

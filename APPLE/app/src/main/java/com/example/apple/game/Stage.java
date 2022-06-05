@@ -1,7 +1,6 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.apple.framework.GameObject;
 
@@ -23,7 +22,7 @@ public class Stage implements GameObject {
 
     @Override
     public void update() {
-        playTime += MainGame.getInstance().frameTime;
+        playTime += MainScene.getInstance().frameTime;
         // 디버깅용 - 주석 해제
         stage = 1 + (int) (playTime / stagePeriod);
         stage = stage <= maxStage ? stage : maxStage;

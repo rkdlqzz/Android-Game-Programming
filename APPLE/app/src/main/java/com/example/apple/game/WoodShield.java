@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.BitmapPool;
 import com.example.apple.framework.CircleCollidable;
 import com.example.apple.framework.Metrics;
@@ -28,8 +28,8 @@ public class WoodShield extends AnimSprite implements CircleCollidable {
 
     @Override
     public void update() {
-        float frameTime = BaseGame.getInstance().frameTime;
-        MainGame game = MainGame.get();
+        float frameTime = Scene.getInstance().frameTime;
+        MainScene game = MainScene.get();
         duration -= frameTime;
         angle += frameTime * ROTATION_SPEED;
 

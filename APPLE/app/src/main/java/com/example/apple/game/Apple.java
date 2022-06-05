@@ -37,7 +37,7 @@ public class Apple extends Sprite implements CircleCollidable {
     }
 
     public void update() {
-        float frameTime = MainGame.getInstance().frameTime;
+        float frameTime = MainScene.getInstance().frameTime;
 
         updateSpeedUp(frameTime);
 
@@ -115,9 +115,9 @@ public class Apple extends Sprite implements CircleCollidable {
     }
 
     public void fireSeed() {
-        MainGame game = MainGame.get();
+        MainScene game = MainScene.get();
         SeedBullet bullet = new SeedBullet(x, y, angle);
-        game.add(MainGame.Layer.bullet, bullet);
+        game.add(MainScene.Layer.bullet, bullet);
         numOfBullet -= 1;
     }
 

@@ -1,10 +1,9 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.apple.R;
-import com.example.apple.framework.BaseGame;
+import com.example.apple.framework.Scene;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Metrics;
 
@@ -28,12 +27,12 @@ public class EnemyGenerator implements GameObject {
 
     @Override
     public void update() {
-        float frameTime = BaseGame.getInstance().frameTime;
-        MainGame game = MainGame.get();
+        float frameTime = Scene.getInstance().frameTime;
+        MainScene game = MainScene.get();
         //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
 
         // maxEnemy 이상은 enemy spawn하지 않도록
-        if (game.objectsAt(MainGame.Layer.enemy).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
+        if (game.objectsAt(MainScene.Layer.enemy).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
 
         elapsedTime += frameTime;
         if (elapsedTime > SPAWN_INTERVAL[game.stage.get() - 1]) {
@@ -45,7 +44,7 @@ public class EnemyGenerator implements GameObject {
     private void spawn() {
         float x, y, dx, dy;
         int side = 0;
-        int stage = MainGame.get().stage.get();
+        int stage = MainScene.get().stage.get();
 
         switch (stage) {
             case 1:     // stage 1 - 상단에서만 생성
@@ -69,7 +68,7 @@ public class EnemyGenerator implements GameObject {
         dy = getDy(side, stage);
 
         Enemy enemy = Enemy.get(x, y, dx, dy, side);
-        MainGame.get().add(MainGame.Layer.enemy, enemy);
+        MainScene.get().add(MainScene.Layer.enemy, enemy);
     }
 
     private float getX(int side) {
