@@ -21,6 +21,9 @@
     <dimen name="button_width">180dp</dimen>
     <dimen name="button_height">90dp</dimen>
     <dimen name="button_diff">8dp</dimen>
+    <dimen name="text_score_width">384dp</dimen>
+    <dimen name="text_score_height">120dp</dimen>
+    <dimen name="final_score_margin_top">100dp</dimen>
     <item name="item_speed_up_duration" type="dimen" format="float">5.0</item>
     <item name="item_leaf_bomb_duration" type="dimen" format="float">3.5</item>
     <item name="item_wood_shield_duration" type="dimen" format="float">5.0</item>
