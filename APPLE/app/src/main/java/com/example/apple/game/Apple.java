@@ -42,8 +42,9 @@ public class Apple extends Sprite implements CircleCollidable {
         updateSpeedUp(frameTime);
 
         dx = (float) joystick.GetActuatorX() * speed * frameTime;
-        x += dx;
         dy = (float) joystick.GetActuatorY() * speed * frameTime;
+        checkOutOfScreen();
+        x += dx;
         y += dy;
         angle = (float) joystick.GetAngleRadian();
 
@@ -118,5 +119,16 @@ public class Apple extends Sprite implements CircleCollidable {
         SeedBullet bullet = new SeedBullet(x, y, angle);
         game.add(MainGame.Layer.bullet, bullet);
         numOfBullet -= 1;
+    }
+
+    private void checkOutOfScreen() {
+        if (dstRect.top <= 0 && dy < 0)
+            dy = 0;
+        if (dstRect.bottom >= Metrics.height && dy > 0)
+            dy = 0;
+        if (dstRect.left <= 0 && dx < 0)
+            dx = 0;
+        if (dstRect.right >= Metrics.width && dx > 0)
+            dx = 0;
     }
 }

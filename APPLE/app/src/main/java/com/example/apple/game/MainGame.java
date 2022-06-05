@@ -55,8 +55,8 @@ public class MainGame {
         add(Layer.manager, new CollisionChecker());
 
         //joystick
-        float jx = Metrics.width / 4;
-        float jy = Metrics.height - Metrics.height / 7;
+        float jx = Metrics.width / 3.5f;
+        float jy = Metrics.height - Metrics.height / 6.0f;
         joystick = new Joystick(jx, jy);
         add(Layer.controller, joystick);
 
