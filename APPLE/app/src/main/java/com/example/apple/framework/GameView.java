@@ -1,6 +1,8 @@
 package com.example.apple.framework;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -85,5 +87,20 @@ public class GameView extends View implements Choreographer.FrameCallback {
             Choreographer.getInstance().postFrameCallback(this);    // 다시 프레임마다 불리도록
             Log.d(TAG, "Resuming game");
         }
+    }
+
+    public Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
+    }
+
+    public boolean onBackPressed() {
+        return Scene.getInstance().handleBackKey();
     }
 }

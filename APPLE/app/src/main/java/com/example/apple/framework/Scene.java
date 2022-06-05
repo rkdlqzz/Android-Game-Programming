@@ -23,8 +23,7 @@ public class Scene {
     private Paint collisionPaint;
 
     protected static ArrayList<Scene> sceneStack = new ArrayList<>();
-    //    public Scene getTopScene() {
-//    }
+
     public static void start(Scene scene) {
         int lastIndex = sceneStack.size() - 1;
         if (lastIndex >= 0) {
@@ -76,6 +75,7 @@ public class Scene {
         elapsedTime = 0;
     }
 
+    public boolean isTransparent() { return false; }
     public void start(){}
     public void pause(){}
     public void resume(){}
@@ -100,6 +100,15 @@ public class Scene {
     }
 
     public void draw(Canvas canvas) {
+        draw(canvas, sceneStack.size() - 1);
+    }
+
+    public void draw(Canvas canvas, int index) {
+        Scene scene = sceneStack.get(index);
+        if (scene.isTransparent() && index > 0) {
+            draw(canvas, index - 1);
+        }
+        ArrayList<ArrayList<GameObject>> layers = scene.layers;
         for (ArrayList<GameObject> gameObjects : layers) {
             for (GameObject gobj : gameObjects) {
                 gobj.draw(canvas);
@@ -139,6 +148,7 @@ public class Scene {
     }
 
     public int objectCount() {
+        if (layers == null) return 0;
         int count = 0;
         for (ArrayList<GameObject> gameObjects : layers) {
             count += gameObjects.size();
@@ -146,7 +156,33 @@ public class Scene {
         return count;
     }
 
+    public ArrayList<GameObject> objectsAt(int layerIndex) {
+        return layers.get(layerIndex);
+    }
+
     public boolean onTouchEvent(MotionEvent event) {
+        int touchLayer = getTouchLayerIndex();
+        if (touchLayer < 0) return false;
+        ArrayList<GameObject> gameObjects = layers.get(touchLayer);
+        for (GameObject gobj : gameObjects) {
+            if (!(gobj instanceof Touchable)) {
+                continue;
+            }
+            boolean processed = ((Touchable) gobj).onTouchEvent(event);
+            if (processed) return true;
+        }
+        return false;
+    }
+
+    protected int getTouchLayerIndex() {
+        return -1;
+    }
+
+    public void finish() {
+        GameView.view.getActivity().finish();
+    }
+
+    public boolean handleBackKey() {
         return false;
     }
 }
