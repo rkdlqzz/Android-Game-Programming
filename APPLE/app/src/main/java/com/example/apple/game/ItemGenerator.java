@@ -27,7 +27,7 @@ public class ItemGenerator implements GameObject {
         //Log.d(TAG, "NumOfItem : " + game.objectsAt(MainGame.Layer.item).size());
 
         // maxItem 이상은 item spawn하지 않도록
-        if (game.objectsAt(MainScene.Layer.item).size() >= MAX_ITEM[game.stage.get() - 1]) return;
+        if (game.objectsAt(MainScene.Layer.item.ordinal()).size() >= MAX_ITEM[game.stage.get() - 1]) return;
 
         elapsedTime += frameTime;
         if (elapsedTime > SPAWN_INTERVAL[game.stage.get() - 1]) {

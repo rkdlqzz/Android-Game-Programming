@@ -90,7 +90,7 @@ public class Item extends Sprite implements CircleCollidable, Recyclable {
                 player.setNumOfBullet(15);
                 break;
             case 5:     // freeze
-                ArrayList<GameObject> enemies = MainScene.get().objectsAt(MainScene.Layer.enemy);
+                ArrayList<GameObject> enemies = MainScene.get().objectsAt(MainScene.Layer.enemy.ordinal());
                 for (GameObject obj : enemies) {
                     if (!(obj instanceof Enemy)) {
                         continue;

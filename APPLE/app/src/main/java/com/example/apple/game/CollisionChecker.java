@@ -13,13 +13,13 @@ public class CollisionChecker implements GameObject {
     @Override
     public void update() {
         MainScene game = MainScene.get();
-        ArrayList<GameObject> players = game.objectsAt(MainScene.Layer.player);
-        ArrayList<GameObject> enemies = game.objectsAt(MainScene.Layer.enemy);
-        ArrayList<GameObject> items = game.objectsAt(MainScene.Layer.item);
-        ArrayList<GameObject> bombs = game.objectsAt(MainScene.Layer.bomb);
-        ArrayList<GameObject> shields = game.objectsAt(MainScene.Layer.shield);
-        ArrayList<GameObject> zones = game.objectsAt(MainScene.Layer.zone);
-        ArrayList<GameObject> bullets = game.objectsAt(MainScene.Layer.bullet);
+        ArrayList<GameObject> players = game.objectsAt(MainScene.Layer.player.ordinal());
+        ArrayList<GameObject> enemies = game.objectsAt(MainScene.Layer.enemy.ordinal());
+        ArrayList<GameObject> items = game.objectsAt(MainScene.Layer.item.ordinal());
+        ArrayList<GameObject> bombs = game.objectsAt(MainScene.Layer.bomb.ordinal());
+        ArrayList<GameObject> shields = game.objectsAt(MainScene.Layer.shield.ordinal());
+        ArrayList<GameObject> zones = game.objectsAt(MainScene.Layer.zone.ordinal());
+        ArrayList<GameObject> bullets = game.objectsAt(MainScene.Layer.bullet.ordinal());
 
         // enemy - player
         for (GameObject o1 : enemies) {

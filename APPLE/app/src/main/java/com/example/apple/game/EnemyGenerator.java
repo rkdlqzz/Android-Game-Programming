@@ -32,7 +32,7 @@ public class EnemyGenerator implements GameObject {
         //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
 
         // maxEnemy 이상은 enemy spawn하지 않도록
-        if (game.objectsAt(MainScene.Layer.enemy).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
+        if (game.objectsAt(MainScene.Layer.enemy.ordinal()).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
 
         elapsedTime += frameTime;
         if (elapsedTime > SPAWN_INTERVAL[game.stage.get() - 1]) {
