@@ -13,13 +13,12 @@ import com.example.apple.framework.Metrics;
 public class Score implements GameObject {
     private final Bitmap bitmap;
     private final int srcCharWidth, srcCharHeight;
-    public float right, top;
+    private float right, top;
     private final float dstCharWidth, dstCharHeight;
     private Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
     private float score;
     private int displayScore;
-    public boolean update;
 
     public Score() {
         this.bitmap = BitmapPool.get(R.mipmap.number_240x32);
@@ -29,8 +28,6 @@ public class Score implements GameObject {
         this.srcCharWidth = bitmap.getWidth() / 10;
         this.srcCharHeight = bitmap.getHeight();
         this.dstCharHeight = dstCharWidth * srcCharHeight / srcCharWidth;
-
-        update = true;
     }
 
     public void setScore(float score) {
