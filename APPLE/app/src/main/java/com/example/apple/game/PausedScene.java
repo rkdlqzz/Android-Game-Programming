@@ -54,7 +54,9 @@ public class PausedScene extends Scene {
         {
             @Override
             public boolean onTouch(Button.Action action) {
-                finish();
+                if (action == Button.Action.released) {
+                    finish();
+                }
                 return true;
             }
         }));

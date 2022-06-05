@@ -26,6 +26,8 @@ public class MainScene extends Scene {
 
 
     public void init() {
+        super.init();
+
         initLayers(Layer.COUNT.ordinal());
 
         // manager
