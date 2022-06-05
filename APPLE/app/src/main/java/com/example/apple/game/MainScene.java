@@ -5,6 +5,7 @@ import com.example.apple.framework.Scene;
 import com.example.apple.framework.GameObject;
 import com.example.apple.framework.Joystick;
 import com.example.apple.framework.Metrics;
+import com.example.apple.framework.Sound;
 
 public class MainScene extends Scene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -71,5 +72,25 @@ public class MainScene extends Scene {
     @Override
     protected int getTouchLayerIndex() {
         return Layer.touchUi.ordinal();
+    }
+
+    @Override
+    public void start() {
+        Sound.playMusic(R.raw.bgm);
+    }
+
+    @Override
+    public void pause() {
+        Sound.pauseMusic();
+    }
+
+    @Override
+    public void resume() {
+        Sound.resumeMusic();
+    }
+
+    @Override
+    public void end() {
+        Sound.stopMusic();
     }
 }
