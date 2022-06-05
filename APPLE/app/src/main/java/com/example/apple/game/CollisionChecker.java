@@ -42,7 +42,9 @@ public class CollisionChecker implements GameObject {
                     }
                     else
                     {
-                        //System.exit(0); // player와 enemy 충돌 시 게임오버    finish()?
+                        // player와 enemy 충돌 시 게임오버
+                        game.push(GameOverScene.get());
+                        //System.exit(0);
                     }
                     break;
                 }
