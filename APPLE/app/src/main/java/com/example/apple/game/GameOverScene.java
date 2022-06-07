@@ -30,12 +30,12 @@ public class GameOverScene extends Scene {
                 Metrics.width / 2, Metrics.height / 2,
                 Metrics.width, Metrics.height, R.mipmap.transparent));
 
-        float score_text_width = Metrics.size(R.dimen.text_score_width);
-        float score_text_height = Metrics.size(R.dimen.text_score_height);
+        float game_over_text_width = Metrics.size(R.dimen.text_game_over_width);
+        float game_over_text_height = Metrics.size(R.dimen.text_game_over_height);
 
         add(GameOverScene.Layer.ui.ordinal(), new Sprite(
-                Metrics.width / 2, Metrics.height / 2 - score_text_height,
-                score_text_width, score_text_height, R.mipmap.game_over));
+                Metrics.width / 2, Metrics.height / 2 - game_over_text_height,
+                game_over_text_width, game_over_text_height, R.mipmap.game_over));
 
         float btn_width = Metrics.size(R.dimen.button_width);
         float btn_height = Metrics.size(R.dimen.button_height);

@@ -32,7 +32,9 @@ public class MainScene extends Scene {
         initLayers(Layer.COUNT.ordinal());
 
         // manager
-        stage = new Stage();
+        float sx = Metrics.size(R.dimen.stage_margin_left);
+        float sy = Metrics.size(R.dimen.stage_margin_top);
+        stage = new Stage(sx, sy);
         add(Layer.manager, stage);
         add(Layer.manager, new EnemyGenerator());
         add(Layer.manager, new ItemGenerator());
