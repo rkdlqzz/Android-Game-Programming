@@ -18,7 +18,7 @@ public class MainScene extends Scene {
     }
 
     public enum Layer {
-        bg, item, enemy, bomb, zone, shield, bullet, player, cloud, ui, touchUi, manager, COUNT
+        bg, item, enemy, bomb, zone, obstacle, shield, bullet, player, cloud, ui, touchUi, manager, COUNT
     }
     public Apple apple;
     private Joystick joystick;
@@ -39,6 +39,7 @@ public class MainScene extends Scene {
         add(Layer.manager, new EnemyGenerator());
         add(Layer.manager, new ItemGenerator());
         add(Layer.manager, new CollisionChecker());
+        add(Layer.manager, new ObstacleGenerator());
 
         //joystick
         float jx = Metrics.width / 3.5f;
