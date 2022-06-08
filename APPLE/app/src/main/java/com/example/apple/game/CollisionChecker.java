@@ -22,6 +22,7 @@ public class CollisionChecker implements GameObject {
         ArrayList<GameObject> shields = game.objectsAt(MainScene.Layer.shield.ordinal());
         ArrayList<GameObject> zones = game.objectsAt(MainScene.Layer.zone.ordinal());
         ArrayList<GameObject> bullets = game.objectsAt(MainScene.Layer.bullet.ordinal());
+        ArrayList<GameObject> obstacles = game.objectsAt(MainScene.Layer.obstacle.ordinal());
 
         // enemy - player
         for (GameObject o1 : enemies) {
@@ -48,7 +49,6 @@ public class CollisionChecker implements GameObject {
                         // player와 enemy 충돌 시 게임오버
                         Sound.playEffect(R.raw.game_over);
                         game.push(GameOverScene.get());
-                        //System.exit(0);
                     }
                     break;
                 }
@@ -124,6 +124,19 @@ public class CollisionChecker implements GameObject {
             if (collided) {
                 continue;
             }
+            // enemy - obstacle
+            for (GameObject o2 : obstacles) {
+                if (!(o2 instanceof Obstacle)) {
+                    continue;
+                }
+                Obstacle obstacle = (Obstacle) o2;
+                if (CollisionHelper.collides(enemy, obstacle)) {
+                    // 적이 커지거나 작아지도록, 이미 변하는 상태면 작용 x 하도록
+                    if (!enemy.getSizeChange())
+                        enemy.changeSize(obstacle.getRBool(), obstacle.duration);
+                    break;
+                }
+            }
         }
 
         // item - player
@@ -148,6 +161,26 @@ public class CollisionChecker implements GameObject {
             }
             if (collided) {
                 continue;
+            }
+        }
+
+        // obstacle - player
+        for (GameObject o1 : obstacles) {
+            if (!(o1 instanceof Obstacle)) {
+                continue;
+            }
+            Obstacle obstacle = (Obstacle) o1;
+            for (GameObject o2 : players) {
+                if (!(o2 instanceof Apple)) {
+                    continue;
+                }
+                Apple player = (Apple) o2;
+                if (CollisionHelper.collides(obstacle, player)) {
+                    // 캐릭터가 커지거나 작아지도록, 이미 변하는 상태면 작용 x 하도록
+                    if (!player.getSizeChange())
+                        player.changeSize(obstacle.getRBool(), obstacle.duration);
+                    break;
+                }
             }
         }
     }
