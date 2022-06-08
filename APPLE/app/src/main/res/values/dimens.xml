@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="bg_speed">10dp</dimen>
-    <dimen name="cloud_speed">15dp</dimen>
+    <dimen name="bg_speed">15dp</dimen>
+    <dimen name="cloud_speed">20dp</dimen>
     <dimen name="apple_radius">29dp</dimen>
     <dimen name="apple_red_speed">180dp</dimen>
     <dimen name="apple_green_speed">270dp</dimen>
