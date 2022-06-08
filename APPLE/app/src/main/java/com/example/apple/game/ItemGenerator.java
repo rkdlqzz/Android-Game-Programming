@@ -1,6 +1,7 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.apple.R;
 import com.example.apple.framework.Scene;
@@ -11,8 +12,8 @@ import java.util.Random;
 
 public class ItemGenerator implements GameObject {
     private static final String TAG = ItemGenerator.class.getSimpleName();
-    private static final int[] MAX_ITEM = {2, 3, 3}; // 한화면에 존재할 수 있는 아이템의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {5.0f, 4.0f, 4.0f};   // 스폰 간격 (스테이지별)
+    private static final int[] MAX_ITEM = {2, 3, 3, 2}; // 한화면에 존재할 수 있는 아이템의 최대 수 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {6.0f, 6.0f, 5.0f, 5.0f};   // 스폰 간격 (스테이지별)
     private float fallSpeed;
     private float elapsedTime;
 
@@ -24,7 +25,7 @@ public class ItemGenerator implements GameObject {
     public void update() {
         float frameTime = Scene.getInstance().frameTime;
         MainScene game = MainScene.get();
-        //Log.d(TAG, "NumOfItem : " + game.objectsAt(MainGame.Layer.item).size());
+        //Log.d(TAG, "NumOfItem : " + game.objectsAt(MainScene.Layer.item.ordinal()).size());
 
         // maxItem 이상은 item spawn하지 않도록
         if (game.objectsAt(MainScene.Layer.item.ordinal()).size() >= MAX_ITEM[game.stage.get() - 1]) return;

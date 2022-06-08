@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class ObstacleGenerator implements GameObject {
     private static final String TAG = ItemGenerator.class.getSimpleName();
-    private static final int[] MAX_OBSTACLE = {1, 1, 2}; // 한화면에 존재할 수 있는 장애물의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {5.0f, 5.0f, 4.0f};   // 스폰 간격 (스테이지별)
+    private static final int[] MAX_OBSTACLE = {1, 1, 2, 3}; // 한화면에 존재할 수 있는 장애물의 최대 수 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {5.0f, 5.0f, 4.0f, 3.0f};   // 스폰 간격 (스테이지별)
     private float fallSpeed;
     private float elapsedTime;
 
