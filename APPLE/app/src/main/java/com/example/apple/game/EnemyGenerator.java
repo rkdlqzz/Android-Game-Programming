@@ -1,6 +1,7 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.apple.R;
 import com.example.apple.framework.Scene;
@@ -11,25 +12,26 @@ import java.util.Random;
 
 public class EnemyGenerator implements GameObject {
     private static final String TAG = EnemyGenerator.class.getSimpleName();
-    private static final int[] MAX_ENEMY = {13, 15, 18}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {1.3f, 0.9f, 0.5f};   // 스폰 간격 (스테이지별)
+    private static final int[] MAX_ENEMY = {13, 15, 18, 22}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {1.3f, 0.9f, 0.5f, 0.3f};   // 스폰 간격 (스테이지별)
     private float elapsedTime;
     private final float speedErrorRange;    // enemy 속도(dx,dy) 오차 범위
     Random random = new Random();
-    private static float[] faceAxisSpeed = {0, 0, 0};    // 정면으로 이동하는 속도 (상->하, 우->좌, 좌->우) (화면 가운데로 이동하는)
+    private static float[] faceAxisSpeed = {0, 0, 0, 0};    // 정면으로 이동하는 속도 (상->하, 우->좌, 좌->우, 하->상) (화면 가운데로 이동하는)
 
     public EnemyGenerator() {
         this.speedErrorRange = Metrics.size(R.dimen.enemy_speed_diff_range);
         this.faceAxisSpeed[0] = Metrics.size(R.dimen.enemy_speed_1);
         this.faceAxisSpeed[1] = Metrics.size(R.dimen.enemy_speed_2);
         this.faceAxisSpeed[2] = Metrics.size(R.dimen.enemy_speed_3);
+        this.faceAxisSpeed[3] = Metrics.size(R.dimen.enemy_speed_3);
     }
 
     @Override
     public void update() {
         float frameTime = Scene.getInstance().frameTime;
         MainScene game = MainScene.get();
-        //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainGame.Layer.enemy).size());
+        //Log.d(TAG, "NumOfEnemy : " + game.objectsAt(MainScene.Layer.enemy.ordinal()).size());
 
         // maxEnemy 이상은 enemy spawn하지 않도록
         if (game.objectsAt(MainScene.Layer.enemy.ordinal()).size() >= MAX_ENEMY[game.stage.get() - 1]) return;
@@ -58,6 +60,10 @@ public class EnemyGenerator implements GameObject {
                 side = random.nextInt(Enemy.Side.left.ordinal() + 1);
                 //side = Enemy.Side.left.ordinal();   // 디버깅용
                 break;
+            case 4:     // stage 4 - 상단, 우측, 좌측, 하단에서 생성
+                side = random.nextInt(Enemy.Side.bottom.ordinal() + 1);
+                //side = Enemy.Side.bottom.ordinal();   // 디버깅용
+                break;
             default:
                 break;
         }
@@ -75,7 +81,8 @@ public class EnemyGenerator implements GameObject {
         float x = 0;
 
         switch (side) {
-            case 0:     // top
+            case 0:     // top, bottom
+            case 3:
                 // width의 0.1~0.9 사이의 x값
                 x = Metrics.width * 0.1f + random.nextInt((int) (Metrics.width * 0.8f));
                 break;
@@ -103,6 +110,9 @@ public class EnemyGenerator implements GameObject {
                 // height의 0.1~0.9 사이의 y값
                 y = Metrics.height * 0.1f + random.nextInt((int) (Metrics.height * 0.8f));
                 break;
+            case 3:     // bottom
+                y = Metrics.height + Enemy.size / 2 + random.nextInt((int) Enemy.size / 2) * (-1);
+                break;
             default:
                 break;
         }
@@ -115,7 +125,8 @@ public class EnemyGenerator implements GameObject {
         int speedError;     // enemy 속도(dx) 오차
 
         switch (side) {
-            case 0:     // top
+            case 0:     // top, bottom
+            case 3:
                 error = random.nextBoolean();
                 dx = random.nextInt((int) faceAxisSpeed[stage - 1] / 3);
                 dx = error ? dx : -dx;
@@ -156,6 +167,12 @@ public class EnemyGenerator implements GameObject {
                 error = random.nextBoolean();
                 dy = random.nextInt((int) faceAxisSpeed[stage - 1]);
                 dy = error ? dy : -dy;
+                break;
+            case 3:     // bottom  (dy는 음수만, 위로만 이동)
+                error = random.nextBoolean();
+                speedError = random.nextInt((int) speedErrorRange);
+                dy = -faceAxisSpeed[stage - 1];
+                dy = error ? dy + speedError : dy - speedError;
                 break;
             default:
                 break;

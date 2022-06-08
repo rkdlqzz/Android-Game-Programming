@@ -1,6 +1,7 @@
 package com.example.apple.game;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.apple.R;
 import com.example.apple.framework.AnimSprite;
@@ -25,11 +26,11 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     private boolean getBigger;
     private float sizeChangeDuration;
     public static float MAX_RADIUS = size / 2 * 1.3f;
-    public static float MIN_RADIUS = size / 2 * 0.7f;
+    public static float MIN_RADIUS = size / 2 * 0.8f;
     public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
 
     public enum Side {
-        top, right, left
+        top, right, left, bottom
     }
 
     public static Enemy get(float x, float y, float dx, float dy, int side) {
@@ -124,13 +125,19 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
                     //Log.d(TAG, "remove side 2");
                 }
                 break;
+            case 3:     // Side.bottom - 하단에서 스폰
+                if (dstRect.bottom < 0 || dstRect.right < 0 || dstRect.left > Metrics.width) {
+                    game.remove(this);
+                    //Log.d(TAG, "remove side 3");
+                }
+                break;
             default:
                 break;
         }
     }
 
     public int getScore() {
-        return MainScene.get().stage.get() * 5;
+        return MainScene.get().stage.get() * 3;
     }
 
     @Override
