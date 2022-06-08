@@ -15,19 +15,20 @@ import java.util.ArrayList;
 public class Stage implements GameObject {
     private static final String TAG = Stage.class.getSimpleName();
     private int stage;
-    //private static float stagePeriod = 60.0f;  // 한 스테이지 플레이 시간
-    private static float stagePeriod = 5.0f;  // 한 스테이지 플레이 시간
-    private final int maxStage = 3;    // 최대 스테이지
+    private static float stagePeriod = 45.0f;  // 한 스테이지 플레이 시간
+    //private static float stagePeriod = 5.0f;  // 한 스테이지 플레이 시간
+    private final int maxStage = 4;    // 최대 스테이지
     private float playTime;
     private Sprite spriteStage;
     protected static int[] bitmapIds = {
-            R.mipmap.stage1, R.mipmap.stage2, R.mipmap.stage3
+            R.mipmap.stage1, R.mipmap.stage2, R.mipmap.stage3, R.mipmap.stage4
     };
     private ArrayList<Bitmap> bitmaps;
 
 
     public Stage(float x, float y) {
         this.stage = 1;
+        //this.stage = 4;
 
         bitmaps = new ArrayList<>();
         for (int i = 0; i < bitmapIds.length; ++i)
