@@ -25,6 +25,11 @@ public class Apple extends Sprite implements CircleCollidable {
     private int numOfBullet;
     private float elapsedTimeForFire;
     private float fireInterval = 0.2f;
+    private boolean sizeChange;
+    private boolean getBigger;
+    private float sizeChangeDuration;
+    private final float ORI_RADIUS, MAX_RADIUS, MIN_RADIUS;
+    public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
 
     public Apple(float x, float y, Joystick joystick) {
         super(x, y, R.dimen.apple_radius, R.mipmap.apple_red);
@@ -34,11 +39,16 @@ public class Apple extends Sprite implements CircleCollidable {
         durationSpeedUp = 0.0f;
         bitmapRedApple = BitmapPool.get(R.mipmap.apple_red);
         bitmapGreenApple = BitmapPool.get(R.mipmap.apple_green);
+
+        ORI_RADIUS = radius;
+        MAX_RADIUS = radius * 1.3f;
+        MIN_RADIUS = radius * 0.7f;
     }
 
     public void update() {
         float frameTime = MainScene.getInstance().frameTime;
 
+        updateSize(frameTime);
         updateSpeedUp(frameTime);
 
         dx = (float) joystick.GetActuatorX() * speed * frameTime;
@@ -130,5 +140,52 @@ public class Apple extends Sprite implements CircleCollidable {
             dx = 0;
         if (dstRect.right >= Metrics.width && dx > 0)
             dx = 0;
+    }
+
+    public boolean getSizeChange() {
+        return sizeChange;
+    }
+
+    public void changeSize(boolean getBigger, float duration) {
+        sizeChange = true;
+        this.getBigger = getBigger;
+        sizeChangeDuration = duration;
+    }
+
+    private void updateSize(float frameTime) {
+        if (!sizeChange) return;
+
+        sizeChangeDuration -= frameTime;
+
+        // 최대크기까지 커지거나 최소크기까지 작아지도록
+        if (sizeChangeDuration > 0.0f) {
+            if (getBigger) {
+                if (radius < MAX_RADIUS) {
+                    radius += frameTime * GROWING_SPEED;
+                }
+            } else {
+                if (radius > MIN_RADIUS) {
+                    radius -= frameTime * GROWING_SPEED;
+                }
+            }
+        } else {
+            if (getBigger) {
+                if (radius > ORI_RADIUS) {
+                    radius -= frameTime * GROWING_SPEED;
+                } else {
+                    radius = ORI_RADIUS;
+                    sizeChange = false;
+                }
+            } else {
+                if (radius < ORI_RADIUS) {
+                    radius += frameTime * GROWING_SPEED;
+                } else {
+                    radius = ORI_RADIUS;
+                    sizeChange = false;
+                }
+            }
+        }
+
+        setDstRectWithRadius();
     }
 }

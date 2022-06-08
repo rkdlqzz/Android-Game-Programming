@@ -10,12 +10,15 @@ import com.example.apple.framework.Recyclable;
 import com.example.apple.framework.RecycleBin;
 import com.example.apple.framework.Scene;
 
+import java.util.Random;
+
 public class Obstacle extends AnimSprite implements CircleCollidable, Recyclable {
     private static final String TAG = Obstacle.class.getSimpleName();
     public static float size = Metrics.width / 6;   // obstacle의 크기
     public static float FRAMES_PER_SECOND = 13.0f;  // 애니메이션 속도
     private float dy;
     protected float duration;
+    Random random = new Random();
 
     public static Obstacle get(float x, float dy) {
         Obstacle obstacle = (Obstacle) RecycleBin.get(Obstacle.class);
@@ -68,10 +71,14 @@ public class Obstacle extends AnimSprite implements CircleCollidable, Recyclable
 
     @Override
     public float getRadius() {
-        return radius;
+        return radius - size * 0.05f;
     }
 
     @Override
     public void finish() {
+    }
+
+    public boolean getRBool() {
+        return random.nextBoolean();
     }
 }

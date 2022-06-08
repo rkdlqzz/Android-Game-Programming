@@ -21,6 +21,12 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     public static float ICE_CUBE_MAX_ROTATION = 8.0f;
     public static float ICE_CUBE_ROTATION_SPEED = 6.0f;
     protected float iceCubeDA;
+    private boolean sizeChange;
+    private boolean getBigger;
+    private float sizeChangeDuration;
+    public static float MAX_RADIUS = size / 2 * 1.3f;
+    public static float MIN_RADIUS = size / 2 * 0.7f;
+    public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
 
     public enum Side {
         top, right, left
@@ -73,6 +79,8 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     public void update() {
         Scene game = Scene.getInstance();
         float frameTime = game.frameTime;
+
+        updateSize(frameTime);
 
         updateFreeze(frameTime);
         if (getFreeze()) return;
@@ -168,10 +176,58 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     private void updateIceCube() {
         spriteIceCude.x = x;
         spriteIceCude.y = y;
+        spriteIceCude.radius = radius;
         spriteIceCude.setDstRectWithRadius();
     }
 
     public void setFreezeDuration(float value) {
         freezeDuration = value;
+    }
+
+    public boolean getSizeChange() {
+        return sizeChange;
+    }
+
+    public void changeSize(boolean getBigger, float duration) {
+        sizeChange = true;
+        this.getBigger = getBigger;
+        sizeChangeDuration = duration;
+    }
+
+    private void updateSize(float frameTime) {
+        if (!sizeChange) return;
+
+        sizeChangeDuration -= frameTime;
+
+        // 최대크기까지 커지거나 최소크기까지 작아지도록
+        if (sizeChangeDuration > 0.0f) {
+            if (getBigger) {
+                if (radius < MAX_RADIUS) {
+                    radius += frameTime * GROWING_SPEED;
+                }
+            } else {
+                if (radius > MIN_RADIUS) {
+                    radius -= frameTime * GROWING_SPEED;
+                }
+            }
+        } else {
+            if (getBigger) {
+                if (radius > size / 2) {
+                    radius -= frameTime * GROWING_SPEED;
+                } else {
+                    radius = size / 2;
+                    sizeChange = false;
+                }
+            } else {
+                if (radius < size / 2) {
+                    radius += frameTime * GROWING_SPEED;
+                } else {
+                    radius = size / 2;
+                    sizeChange = false;
+                }
+            }
+        }
+
+        setDstRectWithRadius();
     }
 }
