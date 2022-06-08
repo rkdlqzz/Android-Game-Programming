@@ -13,7 +13,7 @@ import java.util.Random;
 public class ItemGenerator implements GameObject {
     private static final String TAG = ItemGenerator.class.getSimpleName();
     private static final int[] MAX_ITEM = {2, 3, 3, 2}; // 한화면에 존재할 수 있는 아이템의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {6.0f, 6.0f, 5.0f, 5.0f};   // 스폰 간격 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {6.5f, 6.5f, 5.5f, 5.5f};   // 스폰 간격 (스테이지별)
     private float fallSpeed;
     private float elapsedTime;
 

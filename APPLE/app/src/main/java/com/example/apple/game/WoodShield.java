@@ -42,8 +42,8 @@ public class WoodShield extends AnimSprite implements CircleCollidable {
             radius += frameTime * GROWING_SPEED;
         }
 
-        // 지속시간이 1.5초 남으면 깜빡이다가 끝나면 삭제되도록
-        if (duration > 1.5f) {
+        // 지속시간이 1.2초 남으면 깜빡이다가 끝나면 삭제되도록
+        if (duration > 1.2f) {
             if (bitmap != bitmapWoodShield)
                 bitmap = bitmapWoodShield;
         } else if (duration > 0.0f) {

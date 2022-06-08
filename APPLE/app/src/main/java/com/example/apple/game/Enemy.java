@@ -25,7 +25,7 @@ public class Enemy extends AnimSprite implements CircleCollidable, Recyclable {
     private boolean sizeChange;
     private boolean getBigger;
     private float sizeChangeDuration;
-    public static float MAX_RADIUS = size / 2 * 1.3f;
+    public static float MAX_RADIUS = size / 2 * 1.35f;
     public static float MIN_RADIUS = size / 2 * 0.8f;
     public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
 

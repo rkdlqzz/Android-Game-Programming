@@ -8,7 +8,7 @@ import com.example.apple.framework.Metrics;
 
 public class LeafBomb extends AnimSprite implements CircleCollidable {
     private static final String TAG = LeafBomb.class.getSimpleName();
-    public static float MAX_RADIUS = Metrics.width / (float) 3.3f;
+    public static float MAX_RADIUS = Metrics.width / (float) 3.5f;
     public static float ROTATION_SPEED = 3.5f;
     public static float GROWING_SPEED = Metrics.width / (float) 2.9f;
     private float duration;

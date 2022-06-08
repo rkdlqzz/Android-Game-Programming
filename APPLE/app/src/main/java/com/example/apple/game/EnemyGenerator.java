@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class EnemyGenerator implements GameObject {
     private static final String TAG = EnemyGenerator.class.getSimpleName();
-    private static final int[] MAX_ENEMY = {13, 15, 18, 22}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
-    private static final float[] SPAWN_INTERVAL = {1.3f, 0.9f, 0.5f, 0.3f};   // 스폰 간격 (스테이지별)
+    private static final int[] MAX_ENEMY = {17, 19, 21, 23}; // 한화면에 존재할 수 있는 적의 최대 수 (스테이지별)
+    private static final float[] SPAWN_INTERVAL = {1.1f, 0.8f, 0.4f, 0.25f};   // 스폰 간격 (스테이지별)
     private float elapsedTime;
     private final float speedErrorRange;    // enemy 속도(dx,dy) 오차 범위
     Random random = new Random();
